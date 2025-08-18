@@ -1,133 +1,218 @@
-# PhysioRLHF - Physiological Reinforcement Learning from Human Feedback
+# NeuralLLM - AI & Physiological Research Projects
 
-一个基于生理信号的强化学习应用，通过Apple Watch收集心率数据来优化AI模型的训练。
+This repository contains two related research projects focused on the intersection of AI and physiological signals.
 
-## 功能特性
+## 📁 Project Structure
 
-### 🏥 健康数据集成
-- **Apple Watch心率监测**：实时收集用户心率数据
-- **HealthKit集成**：访问和存储健康数据
-- **WatchConnectivity**：iPhone与Apple Watch实时通信
+```
+neuralLLM/
+├── PhysioRLHFApp-2/          # 🏥 Physiological RLHF iOS Application
+├── affective-rlhf-site/      # 🌐 Affective RLHF Web Application (submodule)
+├── PhysioRLHFApp/           # 📱 Simplified iOS Application
+└── README.md                # 📖 Project Documentation
+```
 
-### 🧠 AI训练优化
-- **生理信号反馈**：使用心率变化作为AI训练反馈信号
-- **任务分类系统**：支持多种AI训练任务类型
-- **进度追踪**：记录训练进度和成就
+## 🏥 PhysioRLHF - Physiological Reinforcement Learning from Human Feedback
 
-### 📱 用户界面
-- **现代化UI设计**：使用SwiftUI构建的直观界面
-- **实时数据展示**：心率数据和连接状态实时更新
-- **任务管理系统**：分类任务和进度追踪
+A physiological signal-based reinforcement learning application that collects heart rate data from Apple Watch to optimize AI model training.
 
-## 项目结构
+### Features
+
+#### 🏥 Health Data Integration
+- **Apple Watch Heart Rate Monitoring**: Real-time heart rate data collection
+- **HealthKit Integration**: Access and store health data
+- **WatchConnectivity**: Real-time communication between iPhone and Apple Watch
+
+#### 🧠 AI Training Optimization
+- **Physiological Signal Feedback**: Use heart rate changes as AI training feedback signals
+- **Task Classification System**: Support for multiple AI training task types
+- **Progress Tracking**: Record training progress and achievements
+
+#### 📱 User Interface
+- **Modern UI Design**: Intuitive interface built with SwiftUI
+- **Real-time Data Display**: Live heart rate data and connection status updates
+- **Task Management System**: Categorized tasks and progress tracking
+
+### Project Structure
 
 ```
 PhysioRLHFApp-2/
-├── PhysioRLHFApp-2/           # 主iOS应用
-│   ├── HomeView.swift         # 主界面
-│   ├── TaskView.swift         # 任务界面
-│   ├── WatchHRBridge.swift    # Watch连接桥接
-│   ├── HealthKitHR.swift      # HealthKit集成
-│   ├── SupabaseClient.swift   # 后端数据同步
+├── PhysioRLHFApp-2/           # Main iOS Application
+│   ├── HomeView.swift         # Main Interface
+│   ├── TaskView.swift         # Task Interface
+│   ├── WatchHRBridge.swift    # Watch Connection Bridge
+│   ├── HealthKitHR.swift      # HealthKit Integration
+│   ├── SupabaseClient.swift   # Backend Data Sync
 │   └── ...
-├── PhysioRLHF watch Watch App/ # Apple Watch应用
-│   ├── WorkoutManager.swift   # 心率监测管理
-│   ├── ContentView.swift      # Watch界面
+├── PhysioRLHF watch Watch App/ # Apple Watch Application
+│   ├── WorkoutManager.swift   # Heart Rate Monitoring Manager
+│   ├── ContentView.swift      # Watch Interface
 │   └── ...
-└── PhysioRLHF iOS/            # iOS应用变体
+└── PhysioRLHF iOS/            # iOS Application Variant
 ```
 
-## 技术栈
+## 🌐 Affective-RLHF Site
 
-- **iOS开发**：SwiftUI, UIKit
-- **Apple Watch**：WatchKit, HealthKit
-- **数据同步**：WatchConnectivity
-- **后端服务**：Supabase
-- **健康数据**：HealthKit Framework
+An affective reinforcement learning web application providing AI training interfaces based on emotional feedback.
 
-## 安装和运行
+### Features
+- **Emotional Feedback System**: AI training based on user emotional states
+- **Web Interface**: Modern React/Next.js frontend
+- **Real-time Interaction**: Dynamic AI training experience
 
-### 前提条件
+## 🛠️ Technology Stack
+
+### PhysioRLHF
+- **iOS Development**: SwiftUI, UIKit
+- **Apple Watch**: WatchKit, HealthKit
+- **Data Synchronization**: WatchConnectivity
+- **Backend Services**: Supabase
+- **Health Data**: HealthKit Framework
+
+### Affective-RLHF Site
+- **Frontend**: React, Next.js
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel/Netlify
+
+## 📦 Installation and Setup
+
+### PhysioRLHF iOS Application
+
+#### Prerequisites
 - Xcode 15.0+
 - iOS 18.5+
 - watchOS 11.5+
-- Apple Watch设备（用于心率监测）
+- Apple Watch device (for heart rate monitoring)
 
-### 安装步骤
+#### Installation Steps
 
-1. **克隆仓库**
+1. **Clone Repository**
    ```bash
-   git clone <your-repo-url>
-   cd neuralLLM
+   git clone https://github.com/Ruifangzhang11/PhysioRLHF.git
+   cd PhysioRLHF
+   git submodule update --init --recursive
    ```
 
-2. **打开项目**
+2. **Open Project**
    ```bash
    open PhysioRLHFApp-2/PhysioRLHFApp-2.xcodeproj
    ```
 
-3. **配置开发者账号**
-   - 在Xcode中选择你的开发者账号
-   - 更新Bundle Identifier
+3. **Configure Developer Account**
+   - Select your developer account in Xcode
+   - Update Bundle Identifier
 
-4. **运行应用**
-   - 选择"PhysioRLHFApp-2" scheme
-   - 选择你的iPhone设备
-   - 点击运行按钮
+4. **Run Application**
+   - Select "PhysioRLHFApp-2" scheme
+   - Choose your iPhone device
+   - Click the run button
 
-## 使用说明
+### Affective-RLHF Web Application
 
-### 首次设置
-1. 启动应用后，点击"Grant"按钮授予HealthKit权限
-2. 确保Apple Watch已配对并安装Watch应用
-3. 检查Watch连接状态
+1. **Navigate to Web Project Directory**
+   ```bash
+   cd affective-rlhf-site
+   ```
 
-### 开始训练
-1. 选择任务类别（Empathy, Clarity, Calmness等）
-2. 点击"Start"开始心率监测
-3. 完成AI训练任务
-4. 系统会根据心率变化提供反馈
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-### 监控数据
-- 实时心率显示
-- 训练进度追踪
-- 连接状态监控
+3. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
 
-## 开发说明
+## 📖 Usage Guide
 
-### 主要组件
+### PhysioRLHF iOS Application
+
+#### Initial Setup
+1. After launching the app, click the "Grant" button to authorize HealthKit permissions
+2. Ensure Apple Watch is paired and Watch app is installed
+3. Check Watch connection status
+
+#### Start Training
+1. Select task category (Empathy, Clarity, Calmness, etc.)
+2. Click "Start" to begin heart rate monitoring
+3. Complete AI training tasks
+4. System provides feedback based on heart rate changes
+
+#### Monitor Data
+- Real-time heart rate display
+- Training progress tracking
+- Connection status monitoring
+
+## 🔧 Development Guide
+
+### Key Components
 
 #### WatchHRBridge
-负责iPhone与Apple Watch之间的通信，处理心率数据传输和命令发送。
+Responsible for communication between iPhone and Apple Watch, handling heart rate data transmission and command sending.
 
 #### WorkoutManager
-管理Apple Watch上的心率监测，包括HealthKit权限和实时数据流。
+Manages heart rate monitoring on Apple Watch, including HealthKit permissions and real-time data streams.
 
 #### HomeView
-主界面，显示任务分类、进度追踪和健康数据状态。
+Main interface displaying task categories, progress tracking, and health data status.
 
-### 数据流
+### Data Flow
 ```
 Apple Watch → WorkoutManager → WatchConnectivity → WatchHRBridge → HomeView
 ```
 
-## 贡献指南
+## 🚀 Key Features
 
-1. Fork项目
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开Pull Request
+### Real-time Heart Rate Monitoring
+- Continuous heart rate data collection from Apple Watch
+- Integration with HealthKit for data persistence
+- Real-time data transmission to iPhone app
 
-## 许可证
+### AI Training Integration
+- Physiological feedback for AI model optimization
+- Task-based training sessions
+- Progress tracking and analytics
 
-本项目采用MIT许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+### Cross-device Synchronization
+- Seamless communication between iPhone and Apple Watch
+- Automatic data synchronization
+- Connection status monitoring
 
-## 联系方式
+## 🤝 Contributing
 
-- 项目维护者：Ruifang Zhang
-- 邮箱：[your-email@example.com]
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 致谢
+## 📄 License
 
-感谢Apple提供的HealthKit和WatchConnectivity框架，以及Supabase提供的后端服务支持。
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Contact
+
+- Project Maintainer: Ruifang Zhang
+- GitHub: [@Ruifangzhang11](https://github.com/Ruifangzhang11)
+
+## 🙏 Acknowledgments
+
+Thanks to Apple for providing HealthKit and WatchConnectivity frameworks, and Supabase for backend service support.
+
+## 🔬 Research Applications
+
+This project demonstrates the potential of using physiological signals (heart rate) as feedback mechanisms for AI training, opening new possibilities in:
+
+- **Human-AI Interaction**: More natural and responsive AI systems
+- **Personalized AI**: AI models that adapt to individual physiological responses
+- **Health-Aware Computing**: Computing systems that consider user health states
+- **Reinforcement Learning**: Novel reward signals based on physiological feedback
+
+## 📊 Future Work
+
+- [ ] Integration with more physiological sensors
+- [ ] Advanced AI model training algorithms
+- [ ] Cross-platform compatibility
+- [ ] Real-time emotion recognition
+- [ ] Multi-user collaborative training
