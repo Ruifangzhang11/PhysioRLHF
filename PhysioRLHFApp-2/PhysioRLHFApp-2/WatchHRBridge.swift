@@ -25,6 +25,13 @@ final class WatchHRBridge: NSObject, ObservableObject {
 
     // ✅ Whether "paired and Watch App installed", this is the basis for your UI to show "Connected"
     @Published var isPairedAndInstalled: Bool = false
+    
+    // Silent mode - prevent UI updates during task execution
+    var silentMode: Bool = false
+    
+    // Non-published properties for silent data collection
+    private var silentLastBPM: Int?
+    private var silentHeartRateHistory: [HeartRateDataPoint] = []
 
     private let session: WCSession? = WCSession.isSupported() ? .default : nil
 
@@ -60,19 +67,59 @@ final class WatchHRBridge: NSObject, ObservableObject {
         print("🧪 Simulating heart rate data: \(simulatedBPM) bpm")
         
         DispatchQueue.main.async {
-            self.lastBPM = simulatedBPM
-            
-            // Add to history
-            let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: simulatedBPM)
-            self.heartRateHistory.append(newDataPoint)
+            if self.silentMode {
+                self.silentLastBPM = simulatedBPM
+                let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: simulatedBPM)
+                self.silentHeartRateHistory.append(newDataPoint)
+                
+                if self.silentHeartRateHistory.count > 100 {
+                    self.silentHeartRateHistory.removeFirst()
+                }
+                print("📊 Simulated heart rate collected silently: \(simulatedBPM) bpm")
+            } else {
+                self.lastBPM = simulatedBPM
+                
+                // Add to history
+                let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: simulatedBPM)
+                self.heartRateHistory.append(newDataPoint)
+                
+                // Keep at most 100 data points
+                if self.heartRateHistory.count > 100 {
+                    self.heartRateHistory.removeFirst()
+                }
+                
+                print("📊 Simulated heart rate history updated: \(self.heartRateHistory.count) points")
+            }
+        }
+    }
+    
+    // MARK: - Silent Mode Control
+    func enableSilentMode() {
+        silentMode = true
+        print("🔇 Silent mode enabled - UI updates paused")
+    }
+    
+    func disableSilentMode() {
+        silentMode = false
+        
+        // Sync silent data to published properties
+        if let silentBPM = silentLastBPM {
+            lastBPM = silentBPM
+        }
+        
+        // Merge silent history with published history
+        if !silentHeartRateHistory.isEmpty {
+            heartRateHistory.append(contentsOf: silentHeartRateHistory)
+            silentHeartRateHistory.removeAll()
             
             // Keep at most 100 data points
-            if self.heartRateHistory.count > 100 {
-                self.heartRateHistory.removeFirst()
+            if heartRateHistory.count > 100 {
+                let excess = heartRateHistory.count - 100
+                heartRateHistory.removeFirst(excess)
             }
-            
-            print("📊 Simulated heart rate history updated: \(self.heartRateHistory.count) points")
         }
+        
+        print("🔊 Silent mode disabled - \(heartRateHistory.count) data points synced")
     }
 
     private func send(_ message: [String: Any]) {
@@ -145,18 +192,32 @@ extension WatchHRBridge: WCSessionDelegate {
             print("📱 Received heart rate from Watch: \(bpm) bpm")
             
             DispatchQueue.main.async {
-                self.lastBPM = bpm
-                
-                            // Add to history
-            let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: bpm)
-            self.heartRateHistory.append(newDataPoint)
-            
-            // Keep at most 100 data points to avoid excessive memory usage
-            if self.heartRateHistory.count > 100 {
-                self.heartRateHistory.removeFirst()
-            }
-                
-                print("📊 Heart rate history updated: \(self.heartRateHistory.count) points")
+                if self.silentMode {
+                    // Silent mode: only update private properties, don't trigger UI updates
+                    self.silentLastBPM = bpm
+                    let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: bpm)
+                    self.silentHeartRateHistory.append(newDataPoint)
+                    
+                    // Keep at most 100 data points
+                    if self.silentHeartRateHistory.count > 100 {
+                        self.silentHeartRateHistory.removeFirst()
+                    }
+                    print("📊 Heart rate collected silently: \(bpm) bpm")
+                } else {
+                    // Normal mode: update published properties
+                    self.lastBPM = bpm
+                    
+                    // Add to history
+                    let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: bpm)
+                    self.heartRateHistory.append(newDataPoint)
+                    
+                    // Keep at most 100 data points to avoid excessive memory usage
+                    if self.heartRateHistory.count > 100 {
+                        self.heartRateHistory.removeFirst()
+                    }
+                    
+                    print("📊 Heart rate history updated: \(self.heartRateHistory.count) points")
+                }
             }
         }
         

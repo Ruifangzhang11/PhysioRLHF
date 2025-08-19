@@ -28,6 +28,8 @@ struct HomeView: View {
     
     // Use environment object to avoid repeated creation in views
     @EnvironmentObject private var watchBridge: WatchHRBridge
+    
+    // Use environment object with silent mode protection
 
     // Categories (uses your PairTask / TaskCategory types)
     private var categories: [TaskCategory] {
@@ -307,7 +309,9 @@ struct HomeView: View {
                 withAnimation { showConfetti = false }
             }
         }
-        .onAppear { requestHealth() } // auto prompt once
+        .onAppear { 
+            requestHealth() // auto prompt once
+        }
     }
 
     // MARK: helpers
@@ -318,6 +322,10 @@ struct HomeView: View {
             print("iOS HealthKit granted:", granted)
         }
     }
+    
+
+    
+
 
     @ViewBuilder
     private func labelCapsule(_ title: String, _ systemName: String) -> some View {

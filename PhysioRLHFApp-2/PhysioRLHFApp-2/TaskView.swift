@@ -165,6 +165,9 @@ struct TaskView: View {
 
     // MARK: - 🔄 HR source selection
     private func startHR() {
+        // Enable silent mode to prevent UI navigation resets during task
+        WatchHRBridge.shared.enableSilentMode()
+        
         // Try watch first
         if WatchHRBridge.shared.isPairedAndInstalled {
             // Subscribe to bridge bpm
@@ -187,6 +190,9 @@ struct TaskView: View {
     private func cleanup() {
         timerCancellable?.cancel(); timerCancellable = nil
         hrCancellable?.cancel(); hrCancellable = nil
+
+        // Disable silent mode and sync collected data
+        WatchHRBridge.shared.disableSilentMode()
 
         // No need to manually stop Watch (watch is controlled by user clicking Stop); just stop the simulation source here
         HREmulator.shared.stop()
