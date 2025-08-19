@@ -166,7 +166,7 @@ struct TaskView: View {
     // MARK: - 🔄 HR source selection
     private func startHR() {
         // 先尝试手表
-        if WatchHRBridge.shared.isPairedAndInstalled() {
+        if WatchHRBridge.shared.isPairedAndInstalled {
             // 订阅桥接的 bpm
             hrCancellable = WatchHRBridge.shared.$lastBPM
                 .compactMap { $0 }

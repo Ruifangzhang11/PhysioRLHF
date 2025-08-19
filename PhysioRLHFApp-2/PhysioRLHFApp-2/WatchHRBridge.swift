@@ -5,6 +5,7 @@
 //  Created by Ruifang Zhang on 8/15/25.
 //
 
+// WatchHRBridge.swift (iOS target)
 import Foundation
 import WatchConnectivity
 import Combine
@@ -13,8 +14,17 @@ import Combine
 final class WatchHRBridge: NSObject, ObservableObject {
     static let shared = WatchHRBridge()
 
-    @Published var lastBPM: Int?      // 最新 BPM
-    @Published var isReachable: Bool = false // ✅ 新增：手表是否可达
+    // 最新 BPM（watch 主动推）
+    @Published var lastBPM: Int?
+    
+    // 心率数据历史记录
+    @Published var heartRateHistory: [HeartRateDataPoint] = []
+
+    // 前台直连（只有 iOS & Watch 前台时才会 true）
+    @Published var isReachable: Bool = false
+
+    // ✅ 是否"已配对且安装了 Watch App"，这是你 UI 要显示"Connected"的依据
+    @Published var isPairedAndInstalled: Bool = false
 
     private let session: WCSession? = WCSession.isSupported() ? .default : nil
 
@@ -23,31 +33,49 @@ final class WatchHRBridge: NSObject, ObservableObject {
         if let s = session {
             s.delegate = self
             s.activate()
-            self.isReachable = s.isReachable // 初始化时同步一次状态
+            // 初始化同步一次
+            #if os(iOS)
+            isPairedAndInstalled = s.isPaired && s.isWatchAppInstalled
+            #endif
+            isReachable = s.isReachable
         } else {
             print("WCSession not supported on this device.")
         }
     }
 
-    // MARK: - Public API for你的 UI
+    // MARK: - Public API 给你的 UI 调用
+
     func startWorkoutOnWatch() { send(["cmd": "start"]) }
     func stopWorkoutOnWatch()  { send(["cmd": "stop"]) }
     func ping()                { send(["cmd": "ping"]) }
+
+    /// 兼容你以前调用的名字
+    func sendPingToWatch() { ping() }
+
+    func activateIfNeeded() { session?.activate() }
     
-#if os(iOS)
-/// 检查手表是否已配对且安装了 App
-func isPairedAndInstalled() -> Bool {
-    guard let s = session else { return false }
-    return s.isPaired && s.isWatchAppInstalled
-}
-#endif
+    // 测试功能：模拟心率数据
+    func simulateHeartRateData() {
+        let simulatedBPM = Int.random(in: 60...100)
+        print("🧪 Simulating heart rate data: \(simulatedBPM) bpm")
+        
+        DispatchQueue.main.async {
+            self.lastBPM = simulatedBPM
+            
+            // 添加到历史记录
+            let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: simulatedBPM)
+            self.heartRateHistory.append(newDataPoint)
+            
+            // 保持最多100个数据点
+            if self.heartRateHistory.count > 100 {
+                self.heartRateHistory.removeFirst()
+            }
+            
+            print("📊 Simulated heart rate history updated: \(self.heartRateHistory.count) points")
+        }
+    }
 
-/// 发送 ping 到手表
-func sendPingToWatch() {
-    send(["cmd": "ping"])
-}
-
-    func send(_ message: [String: Any]) {
+    private func send(_ message: [String: Any]) {
         guard let s = session else { return }
 
         #if os(iOS)
@@ -62,16 +90,10 @@ func sendPingToWatch() {
                 print("sendMessage error:", error.localizedDescription)
             }
         } else {
-            do {
-                try s.updateApplicationContext(message)
-            } catch {
-                print("updateApplicationContext error:", error.localizedDescription)
-            }
+            do { try s.updateApplicationContext(message) }
+            catch { print("updateApplicationContext error:", error.localizedDescription) }
         }
     }
-
-    /// 可选：onAppear 时主动激活
-    func activateIfNeeded() { session?.activate() }
 }
 
 // MARK: - WCSessionDelegate
@@ -80,35 +102,67 @@ extension WatchHRBridge: WCSessionDelegate {
                  activationDidCompleteWith activationState: WCSessionActivationState,
                  error: Error?) {
         print("🔗 WCSession activation completed - State: \(activationState.rawValue)")
-        if let error = error { 
-            print("❌ WC activation error:", error.localizedDescription) 
+        if let error = error {
+            print("❌ WC activation error:", error.localizedDescription)
         } else {
             print("✅ WCSession activated successfully")
         }
-        
+
         DispatchQueue.main.async {
+            #if os(iOS)
+            self.isPairedAndInstalled = session.isPaired && session.isWatchAppInstalled
+            #endif
             self.isReachable = session.isReachable
-            print("📱 iPhone side - isReachable: \(session.isReachable)")
         }
     }
 
-    // ✅ 关键：监听可达状态变化
+    /// iOS 专用：配对或安装状态变化（插拔表、安装/卸载 Watch App 时会回调）
+    #if os(iOS)
+    func sessionWatchStateDidChange(_ session: WCSession) {
+        DispatchQueue.main.async {
+            self.isPairedAndInstalled = session.isPaired && session.isWatchAppInstalled
+            print("👀 watch state -> paired:\(session.isPaired) installed:\(session.isWatchAppInstalled)")
+        }
+    }
+    #endif
+
+    /// 前台直连状态变化
     func sessionReachabilityDidChange(_ session: WCSession) {
-        print("🔄 Watch reachability changed: \(session.isReachable)")
         DispatchQueue.main.async {
             self.isReachable = session.isReachable
+            print("🔄 reachability -> \(session.isReachable)")
         }
     }
 
-#if os(iOS)
+    #if os(iOS)
     func sessionDidBecomeInactive(_ session: WCSession) {}
     func sessionDidDeactivate(_ session: WCSession) { session.activate() }
-#endif
+    #endif
 
-    // 接收手表发来的 BPM
+    /// 收到手表推来的消息（心率等）
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         if let bpm = message["bpm"] as? Int {
-            DispatchQueue.main.async { self.lastBPM = bpm }
+            print("📱 Received heart rate from Watch: \(bpm) bpm")
+            
+            DispatchQueue.main.async {
+                self.lastBPM = bpm
+                
+                // 添加到历史记录
+                let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: bpm)
+                self.heartRateHistory.append(newDataPoint)
+                
+                // 保持最多100个数据点，避免内存占用过多
+                if self.heartRateHistory.count > 100 {
+                    self.heartRateHistory.removeFirst()
+                }
+                
+                print("📊 Heart rate history updated: \(self.heartRateHistory.count) points")
+            }
+        }
+        
+        // 处理ping回复
+        if message["pong"] != nil {
+            print("🏓 Received pong from Watch")
         }
     }
 }

@@ -1,0 +1,1408 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		52E954B42E4EBD03002C442A /* PhysioRLHF watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 52E954942E4EBD01002C442A /* PhysioRLHF watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		52E953BA2E46B81A002C442A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52E953A32E46B819002C442A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52E953AA2E46B819002C442A;
+			remoteInfo = "PhysioRLHFApp-2";
+		};
+		52E953C42E46B81A002C442A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52E953A32E46B819002C442A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52E953AA2E46B819002C442A;
+			remoteInfo = "PhysioRLHFApp-2";
+		};
+		52E954642E4D5F6B002C442A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52E953A32E46B819002C442A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52E954562E4D5F69002C442A;
+			remoteInfo = "PhysioRLHF iOS";
+		};
+		52E9546E2E4D5F6B002C442A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52E953A32E46B819002C442A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52E954562E4D5F69002C442A;
+			remoteInfo = "PhysioRLHF iOS";
+		};
+		52E954A12E4EBD03002C442A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52E953A32E46B819002C442A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52E954932E4EBD01002C442A;
+			remoteInfo = "PhysioRLHF watch Watch App";
+		};
+		52E954AB2E4EBD03002C442A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52E953A32E46B819002C442A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52E954932E4EBD01002C442A;
+			remoteInfo = "PhysioRLHF watch Watch App";
+		};
+		52E954B22E4EBD03002C442A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52E953A32E46B819002C442A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52E954932E4EBD01002C442A;
+			remoteInfo = "PhysioRLHF watch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		52E954B82E4EBD03002C442A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				52E954B42E4EBD03002C442A /* PhysioRLHF watch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		52E953AB2E46B819002C442A /* PhysioRLHFApp-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhysioRLHFApp-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E953B92E46B81A002C442A /* PhysioRLHFApp-2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhysioRLHFApp-2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E953C32E46B81A002C442A /* PhysioRLHFApp-2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhysioRLHFApp-2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E954572E4D5F69002C442A /* PhysioRLHF iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhysioRLHF iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E954632E4D5F6B002C442A /* PhysioRLHF iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhysioRLHF iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E9546D2E4D5F6B002C442A /* PhysioRLHF iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhysioRLHF iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E954942E4EBD01002C442A /* PhysioRLHF watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhysioRLHF watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E954A02E4EBD03002C442A /* PhysioRLHF watch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhysioRLHF watch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E954AA2E4EBD03002C442A /* PhysioRLHF watch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PhysioRLHF watch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		52E954522E4D5CD3002C442A /* Exceptions for "PhysioRLHFApp-2" folder in "PhysioRLHFApp-2" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 52E953AA2E46B819002C442A /* PhysioRLHFApp-2 */;
+		};
+		52E954862E4D60AD002C442A /* Exceptions for "PhysioRLHFApp-2" folder in "PhysioRLHF iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AppConfig.swift,
+				HealthAuth.swift,
+				HealthKitHR.swift,
+				HeartRateChart.swift,
+				HomeView.swift,
+				HREmulator.swift,
+				SharedTypes.swift,
+				SupabaseClient.swift,
+				TaskModels.swift,
+				TaskView.swift,
+				WatchHRBridge.swift,
+			);
+			target = 52E954562E4D5F69002C442A /* PhysioRLHF iOS */;
+		};
+		52E955222E545CCF009EE64E /* Exceptions for "PhysioRLHFApp-2" folder in "PhysioRLHF watch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SharedTypes.swift,
+				WatchHRBridge.swift,
+			);
+			target = 52E954932E4EBD01002C442A /* PhysioRLHF watch Watch App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		52E953AD2E46B819002C442A /* PhysioRLHFApp-2 */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				52E954522E4D5CD3002C442A /* Exceptions for "PhysioRLHFApp-2" folder in "PhysioRLHFApp-2" target */,
+				52E954862E4D60AD002C442A /* Exceptions for "PhysioRLHFApp-2" folder in "PhysioRLHF iOS" target */,
+				52E955222E545CCF009EE64E /* Exceptions for "PhysioRLHFApp-2" folder in "PhysioRLHF watch Watch App" target */,
+			);
+			path = "PhysioRLHFApp-2";
+			sourceTree = "<group>";
+		};
+		52E953BC2E46B81A002C442A /* PhysioRLHFApp-2Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PhysioRLHFApp-2Tests";
+			sourceTree = "<group>";
+		};
+		52E953C62E46B81A002C442A /* PhysioRLHFApp-2UITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PhysioRLHFApp-2UITests";
+			sourceTree = "<group>";
+		};
+		52E954582E4D5F69002C442A /* PhysioRLHF iOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PhysioRLHF iOS";
+			sourceTree = "<group>";
+		};
+		52E954662E4D5F6B002C442A /* PhysioRLHF iOSTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PhysioRLHF iOSTests";
+			sourceTree = "<group>";
+		};
+		52E954702E4D5F6B002C442A /* PhysioRLHF iOSUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PhysioRLHF iOSUITests";
+			sourceTree = "<group>";
+		};
+		52E954952E4EBD01002C442A /* PhysioRLHF watch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PhysioRLHF watch Watch App";
+			sourceTree = "<group>";
+		};
+		52E954A32E4EBD03002C442A /* PhysioRLHF watch Watch AppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PhysioRLHF watch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		52E954AD2E4EBD03002C442A /* PhysioRLHF watch Watch AppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "PhysioRLHF watch Watch AppUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		52E953A82E46B819002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E953B62E46B81A002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E953C02E46B81A002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954542E4D5F69002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954602E4D5F6B002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E9546A2E4D5F6B002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954912E4EBD01002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E9549D2E4EBD03002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954A72E4EBD03002C442A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		52E953A22E46B818002C442A = {
+			isa = PBXGroup;
+			children = (
+				52E953AD2E46B819002C442A /* PhysioRLHFApp-2 */,
+				52E953BC2E46B81A002C442A /* PhysioRLHFApp-2Tests */,
+				52E953C62E46B81A002C442A /* PhysioRLHFApp-2UITests */,
+				52E954582E4D5F69002C442A /* PhysioRLHF iOS */,
+				52E954662E4D5F6B002C442A /* PhysioRLHF iOSTests */,
+				52E954702E4D5F6B002C442A /* PhysioRLHF iOSUITests */,
+				52E954952E4EBD01002C442A /* PhysioRLHF watch Watch App */,
+				52E954A32E4EBD03002C442A /* PhysioRLHF watch Watch AppTests */,
+				52E954AD2E4EBD03002C442A /* PhysioRLHF watch Watch AppUITests */,
+				52E953AC2E46B819002C442A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		52E953AC2E46B819002C442A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				52E953AB2E46B819002C442A /* PhysioRLHFApp-2.app */,
+				52E953B92E46B81A002C442A /* PhysioRLHFApp-2Tests.xctest */,
+				52E953C32E46B81A002C442A /* PhysioRLHFApp-2UITests.xctest */,
+				52E954572E4D5F69002C442A /* PhysioRLHF iOS.app */,
+				52E954632E4D5F6B002C442A /* PhysioRLHF iOSTests.xctest */,
+				52E9546D2E4D5F6B002C442A /* PhysioRLHF iOSUITests.xctest */,
+				52E954942E4EBD01002C442A /* PhysioRLHF watch Watch App.app */,
+				52E954A02E4EBD03002C442A /* PhysioRLHF watch Watch AppTests.xctest */,
+				52E954AA2E4EBD03002C442A /* PhysioRLHF watch Watch AppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		52E953AA2E46B819002C442A /* PhysioRLHFApp-2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E953CD2E46B81A002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHFApp-2" */;
+			buildPhases = (
+				52E953A72E46B819002C442A /* Sources */,
+				52E953A82E46B819002C442A /* Frameworks */,
+				52E953A92E46B819002C442A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				52E953AD2E46B819002C442A /* PhysioRLHFApp-2 */,
+			);
+			name = "PhysioRLHFApp-2";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHFApp-2";
+			productReference = 52E953AB2E46B819002C442A /* PhysioRLHFApp-2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		52E953B82E46B81A002C442A /* PhysioRLHFApp-2Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E953D02E46B81A002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHFApp-2Tests" */;
+			buildPhases = (
+				52E953B52E46B81A002C442A /* Sources */,
+				52E953B62E46B81A002C442A /* Frameworks */,
+				52E953B72E46B81A002C442A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52E953BB2E46B81A002C442A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52E953BC2E46B81A002C442A /* PhysioRLHFApp-2Tests */,
+			);
+			name = "PhysioRLHFApp-2Tests";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHFApp-2Tests";
+			productReference = 52E953B92E46B81A002C442A /* PhysioRLHFApp-2Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		52E953C22E46B81A002C442A /* PhysioRLHFApp-2UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E953D32E46B81A002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHFApp-2UITests" */;
+			buildPhases = (
+				52E953BF2E46B81A002C442A /* Sources */,
+				52E953C02E46B81A002C442A /* Frameworks */,
+				52E953C12E46B81A002C442A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52E953C52E46B81A002C442A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52E953C62E46B81A002C442A /* PhysioRLHFApp-2UITests */,
+			);
+			name = "PhysioRLHFApp-2UITests";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHFApp-2UITests";
+			productReference = 52E953C32E46B81A002C442A /* PhysioRLHFApp-2UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		52E954562E4D5F69002C442A /* PhysioRLHF iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E954752E4D5F6B002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF iOS" */;
+			buildPhases = (
+				52E954532E4D5F69002C442A /* Sources */,
+				52E954542E4D5F69002C442A /* Frameworks */,
+				52E954552E4D5F69002C442A /* Resources */,
+				52E954B82E4EBD03002C442A /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52E954B32E4EBD03002C442A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52E954582E4D5F69002C442A /* PhysioRLHF iOS */,
+			);
+			name = "PhysioRLHF iOS";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHF iOS";
+			productReference = 52E954572E4D5F69002C442A /* PhysioRLHF iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		52E954622E4D5F6B002C442A /* PhysioRLHF iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E954782E4D5F6B002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF iOSTests" */;
+			buildPhases = (
+				52E9545F2E4D5F6B002C442A /* Sources */,
+				52E954602E4D5F6B002C442A /* Frameworks */,
+				52E954612E4D5F6B002C442A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52E954652E4D5F6B002C442A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52E954662E4D5F6B002C442A /* PhysioRLHF iOSTests */,
+			);
+			name = "PhysioRLHF iOSTests";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHF iOSTests";
+			productReference = 52E954632E4D5F6B002C442A /* PhysioRLHF iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		52E9546C2E4D5F6B002C442A /* PhysioRLHF iOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E9547B2E4D5F6B002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF iOSUITests" */;
+			buildPhases = (
+				52E954692E4D5F6B002C442A /* Sources */,
+				52E9546A2E4D5F6B002C442A /* Frameworks */,
+				52E9546B2E4D5F6B002C442A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52E9546F2E4D5F6B002C442A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52E954702E4D5F6B002C442A /* PhysioRLHF iOSUITests */,
+			);
+			name = "PhysioRLHF iOSUITests";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHF iOSUITests";
+			productReference = 52E9546D2E4D5F6B002C442A /* PhysioRLHF iOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		52E954932E4EBD01002C442A /* PhysioRLHF watch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E954B52E4EBD03002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF watch Watch App" */;
+			buildPhases = (
+				52E954902E4EBD01002C442A /* Sources */,
+				52E954912E4EBD01002C442A /* Frameworks */,
+				52E954922E4EBD01002C442A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				52E954952E4EBD01002C442A /* PhysioRLHF watch Watch App */,
+			);
+			name = "PhysioRLHF watch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHF watch Watch App";
+			productReference = 52E954942E4EBD01002C442A /* PhysioRLHF watch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		52E9549F2E4EBD03002C442A /* PhysioRLHF watch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E954B92E4EBD03002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF watch Watch AppTests" */;
+			buildPhases = (
+				52E9549C2E4EBD03002C442A /* Sources */,
+				52E9549D2E4EBD03002C442A /* Frameworks */,
+				52E9549E2E4EBD03002C442A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52E954A22E4EBD03002C442A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52E954A32E4EBD03002C442A /* PhysioRLHF watch Watch AppTests */,
+			);
+			name = "PhysioRLHF watch Watch AppTests";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHF watch Watch AppTests";
+			productReference = 52E954A02E4EBD03002C442A /* PhysioRLHF watch Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		52E954A92E4EBD03002C442A /* PhysioRLHF watch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52E954BC2E4EBD03002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF watch Watch AppUITests" */;
+			buildPhases = (
+				52E954A62E4EBD03002C442A /* Sources */,
+				52E954A72E4EBD03002C442A /* Frameworks */,
+				52E954A82E4EBD03002C442A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52E954AC2E4EBD03002C442A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52E954AD2E4EBD03002C442A /* PhysioRLHF watch Watch AppUITests */,
+			);
+			name = "PhysioRLHF watch Watch AppUITests";
+			packageProductDependencies = (
+			);
+			productName = "PhysioRLHF watch Watch AppUITests";
+			productReference = 52E954AA2E4EBD03002C442A /* PhysioRLHF watch Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		52E953A32E46B819002C442A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					52E953AA2E46B819002C442A = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					52E953B82E46B81A002C442A = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 52E953AA2E46B819002C442A;
+					};
+					52E953C22E46B81A002C442A = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 52E953AA2E46B819002C442A;
+					};
+					52E954562E4D5F69002C442A = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					52E954622E4D5F6B002C442A = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 52E954562E4D5F69002C442A;
+					};
+					52E9546C2E4D5F6B002C442A = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 52E954562E4D5F69002C442A;
+					};
+					52E954932E4EBD01002C442A = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					52E9549F2E4EBD03002C442A = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 52E954932E4EBD01002C442A;
+					};
+					52E954A92E4EBD03002C442A = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 52E954932E4EBD01002C442A;
+					};
+				};
+			};
+			buildConfigurationList = 52E953A62E46B819002C442A /* Build configuration list for PBXProject "PhysioRLHFApp-2" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 52E953A22E46B818002C442A;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				52E953DE2E4D3724002C442A /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 52E953AC2E46B819002C442A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				52E953AA2E46B819002C442A /* PhysioRLHFApp-2 */,
+				52E953B82E46B81A002C442A /* PhysioRLHFApp-2Tests */,
+				52E953C22E46B81A002C442A /* PhysioRLHFApp-2UITests */,
+				52E954562E4D5F69002C442A /* PhysioRLHF iOS */,
+				52E954622E4D5F6B002C442A /* PhysioRLHF iOSTests */,
+				52E9546C2E4D5F6B002C442A /* PhysioRLHF iOSUITests */,
+				52E954932E4EBD01002C442A /* PhysioRLHF watch Watch App */,
+				52E9549F2E4EBD03002C442A /* PhysioRLHF watch Watch AppTests */,
+				52E954A92E4EBD03002C442A /* PhysioRLHF watch Watch AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		52E953A92E46B819002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E953B72E46B81A002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E953C12E46B81A002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954552E4D5F69002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954612E4D5F6B002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E9546B2E4D5F6B002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954922E4EBD01002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E9549E2E4EBD03002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954A82E4EBD03002C442A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		52E953A72E46B819002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E953B52E46B81A002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E953BF2E46B81A002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954532E4D5F69002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E9545F2E4D5F6B002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954692E4D5F6B002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954902E4EBD01002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E9549C2E4EBD03002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E954A62E4EBD03002C442A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		52E953BB2E46B81A002C442A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52E953AA2E46B819002C442A /* PhysioRLHFApp-2 */;
+			targetProxy = 52E953BA2E46B81A002C442A /* PBXContainerItemProxy */;
+		};
+		52E953C52E46B81A002C442A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52E953AA2E46B819002C442A /* PhysioRLHFApp-2 */;
+			targetProxy = 52E953C42E46B81A002C442A /* PBXContainerItemProxy */;
+		};
+		52E954652E4D5F6B002C442A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52E954562E4D5F69002C442A /* PhysioRLHF iOS */;
+			targetProxy = 52E954642E4D5F6B002C442A /* PBXContainerItemProxy */;
+		};
+		52E9546F2E4D5F6B002C442A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52E954562E4D5F69002C442A /* PhysioRLHF iOS */;
+			targetProxy = 52E9546E2E4D5F6B002C442A /* PBXContainerItemProxy */;
+		};
+		52E954A22E4EBD03002C442A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52E954932E4EBD01002C442A /* PhysioRLHF watch Watch App */;
+			targetProxy = 52E954A12E4EBD03002C442A /* PBXContainerItemProxy */;
+		};
+		52E954AC2E4EBD03002C442A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52E954932E4EBD01002C442A /* PhysioRLHF watch Watch App */;
+			targetProxy = 52E954AB2E4EBD03002C442A /* PBXContainerItemProxy */;
+		};
+		52E954B32E4EBD03002C442A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52E954932E4EBD01002C442A /* PhysioRLHF watch Watch App */;
+			targetProxy = 52E954B22E4EBD03002C442A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		52E953CB2E46B81A002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		52E953CC2E46B81A002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		52E953CE2E46B81A002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PhysioRLHFApp-2/PhysioRLHFApp_2.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PhysioRLHFApp-2/Info.plist";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHFApp-2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Debug;
+		};
+		52E953CF2E46B81A002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PhysioRLHFApp-2/PhysioRLHFApp_2.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PhysioRLHFApp-2/Info.plist";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHFApp-2";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Release;
+		};
+		52E953D12E46B81A002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHFApp-2Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhysioRLHFApp-2.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhysioRLHFApp-2";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Debug;
+		};
+		52E953D22E46B81A002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHFApp-2Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhysioRLHFApp-2.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhysioRLHFApp-2";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Release;
+		};
+		52E953D42E46B81A002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHFApp-2UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = "PhysioRLHFApp-2";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Debug;
+		};
+		52E953D52E46B81A002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHFApp-2UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = "PhysioRLHFApp-2";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Release;
+		};
+		52E954762E4D5F6B002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PhysioRLHF iOS/PhysioRLHF iOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PhysioRLHF-iOS-Info.plist";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Read heart rate to study user preference (non-medical).";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		52E954772E4D5F6B002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PhysioRLHF iOS/PhysioRLHF iOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PhysioRLHF-iOS-Info.plist";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Read heart rate to study user preference (non-medical).";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		52E954792E4D5F6B002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhysioRLHF iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhysioRLHF iOS";
+			};
+			name = Debug;
+		};
+		52E9547A2E4D5F6B002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhysioRLHF iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhysioRLHF iOS";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		52E9547C2E4D5F6B002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "PhysioRLHF iOS";
+			};
+			name = Debug;
+		};
+		52E9547D2E4D5F6B002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "PhysioRLHF iOS";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		52E954B62E4EBD03002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PhysioRLHF watch Watch App/PhysioRLHF watch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PhysioRLHF-watch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "PhysioRLHF watch";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "App needs access to your health data to read heart rate, activity, and other metrics.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "App needs access to update your health data such as workouts and activity records.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "Ruifang-Zhang.PhysioRLHF-iOS";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-iOS.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Debug;
+		};
+		52E954B72E4EBD03002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PhysioRLHF watch Watch App/PhysioRLHF watch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PhysioRLHF-watch-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "PhysioRLHF watch";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "App needs access to your health data to read heart rate, activity, and other metrics.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "App needs access to update your health data such as workouts and activity records.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "Ruifang-Zhang.PhysioRLHF-iOS";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-iOS.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Release;
+		};
+		52E954BA2E4EBD03002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-watch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhysioRLHF watch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhysioRLHF watch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Debug;
+		};
+		52E954BB2E4EBD03002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-watch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhysioRLHF watch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhysioRLHF watch Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Release;
+		};
+		52E954BD2E4EBD03002C442A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-watch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "PhysioRLHF watch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Debug;
+		};
+		52E954BE2E4EBD03002C442A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X3HF4TQ64F;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Ruifang-Zhang.PhysioRLHF-watch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "PhysioRLHF watch Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		52E953A62E46B819002C442A /* Build configuration list for PBXProject "PhysioRLHFApp-2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E953CB2E46B81A002C442A /* Debug */,
+				52E953CC2E46B81A002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E953CD2E46B81A002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHFApp-2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E953CE2E46B81A002C442A /* Debug */,
+				52E953CF2E46B81A002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E953D02E46B81A002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHFApp-2Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E953D12E46B81A002C442A /* Debug */,
+				52E953D22E46B81A002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E953D32E46B81A002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHFApp-2UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E953D42E46B81A002C442A /* Debug */,
+				52E953D52E46B81A002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E954752E4D5F6B002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E954762E4D5F6B002C442A /* Debug */,
+				52E954772E4D5F6B002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E954782E4D5F6B002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E954792E4D5F6B002C442A /* Debug */,
+				52E9547A2E4D5F6B002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E9547B2E4D5F6B002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF iOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E9547C2E4D5F6B002C442A /* Debug */,
+				52E9547D2E4D5F6B002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E954B52E4EBD03002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF watch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E954B62E4EBD03002C442A /* Debug */,
+				52E954B72E4EBD03002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E954B92E4EBD03002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF watch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E954BA2E4EBD03002C442A /* Debug */,
+				52E954BB2E4EBD03002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52E954BC2E4EBD03002C442A /* Build configuration list for PBXNativeTarget "PhysioRLHF watch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52E954BD2E4EBD03002C442A /* Debug */,
+				52E954BE2E4EBD03002C442A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		52E953DE2E4D3724002C442A /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase-community/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+	};
+	rootObject = 52E953A32E46B819002C442A /* Project object */;
+}

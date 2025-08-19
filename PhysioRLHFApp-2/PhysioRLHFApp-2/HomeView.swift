@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Charts
 
 // ======================================================
 // HomeView: categories, daily goals, leaderboard, Health
@@ -24,6 +25,9 @@ struct HomeView: View {
 
     // Mock leaderboard (replace with Supabase aggregation later)
     @State private var leaderboard: [String: Int] = ["You": 0, "Alice": 5, "Bob": 3]
+    
+    // 使用环境对象，避免在视图中重复创建
+    @EnvironmentObject private var watchBridge: WatchHRBridge
 
     // Categories (uses your PairTask / TaskCategory types)
     private var categories: [TaskCategory] {
@@ -76,23 +80,30 @@ struct HomeView: View {
                     }
                     .padding(.horizontal, 4)
                     
-                    // ✅ 加在你的 body 里合适的位置
-                    Section(header: Text("Watch & Heart Rate")) {
+                    VStack(spacing: 12) {
                         HStack {
-                            Image(systemName: WatchHRBridge.shared.isReachable ? "applewatch.watchface" : "applewatch")
-                                .foregroundColor(WatchHRBridge.shared.isReachable ? .green : .red)
-                            Text(WatchHRBridge.shared.isReachable ? "Watch Connected" : "Watch Not Connected")
-                                .foregroundColor(WatchHRBridge.shared.isReachable ? .green : .red)
+                            Text("Watch & Heart Rate")
+                                .font(.headline)
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        
+                        VStack(spacing: 8) {
+                        HStack {
+                            Image(systemName: watchBridge.isReachable ? "applewatch.watchface" : "applewatch")
+                                .foregroundColor(watchBridge.isReachable ? .green : .red)
+                            Text(watchBridge.isReachable ? "Watch Connected" : "Watch Not Connected")
+                                .foregroundColor(watchBridge.isReachable ? .green : .red)
                         }
                         
                         HStack {
-                            Text("Paired: \(WatchHRBridge.shared.isPairedAndInstalled() ? "Yes" : "No")")
+                            Text("Paired: \(watchBridge.isPairedAndInstalled ? "Yes" : "No")")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             Spacer()
                             Button("Refresh") {
                                 // Force refresh connection status
-                                WatchHRBridge.shared.activateIfNeeded()
+                                watchBridge.activateIfNeeded()
                             }
                             .font(.caption)
                             .buttonStyle(.bordered)
@@ -100,14 +111,53 @@ struct HomeView: View {
 
                         HStack {
                             Text("❤️ Heart Rate:")
-                            Text("\(WatchHRBridge.shared.lastBPM ?? 0) bpm")
+                            Text("\(watchBridge.lastBPM ?? 0) bpm")
                                 .foregroundColor(.blue)
                                 .font(.headline)
+                            
+                            // 闪闪的LIVE指示器
+                            if watchBridge.isReachable && watchBridge.lastBPM != nil {
+                                HStack(spacing: 4) {
+                                    // 闪烁的圆点
+                                    Circle()
+                                        .fill(Color.green)
+                                        .frame(width: 8, height: 8)
+                                        .scaleEffect(watchBridge.isReachable ? 1.2 : 0.8)
+                                        .opacity(watchBridge.isReachable ? 1.0 : 0.5)
+                                        .animation(
+                                            .easeInOut(duration: 0.6)
+                                            .repeatForever(autoreverses: true),
+                                            value: watchBridge.isReachable
+                                        )
+                                    
+                                    // LIVE文字
+                                    Text("LIVE")
+                                        .font(.caption2)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.green)
+                                        .opacity(watchBridge.isReachable ? 1.0 : 0.7)
+                                        .animation(
+                                            .easeInOut(duration: 0.8)
+                                            .repeatForever(autoreverses: true),
+                                            value: watchBridge.isReachable
+                                        )
+                                }
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color.green.opacity(0.1))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(Color.green.opacity(0.3), lineWidth: 1)
+                                        )
+                                )
+                            }
                         }
 
                         HStack(spacing: 20) {
                             Button(action: {
-                                WatchHRBridge.shared.startWorkoutOnWatch()
+                                watchBridge.startWorkoutOnWatch()
                             }) {
                                 Text("Start")
                                     .padding()
@@ -116,7 +166,7 @@ struct HomeView: View {
                             }
 
                             Button(action: {
-                                WatchHRBridge.shared.stopWorkoutOnWatch()
+                                watchBridge.stopWorkoutOnWatch()
                             }) {
                                 Text("Stop")
                                     .padding()
@@ -125,14 +175,30 @@ struct HomeView: View {
                             }
                             
                             Button(action: {
-                                WatchHRBridge.shared.ping()
+                                watchBridge.ping()
                             }) {
                                 Text("Test")
                                     .padding()
                                     .background(Color.blue.opacity(0.2))
                                     .cornerRadius(8)
                             }
+                            
+                            Button(action: {
+                                watchBridge.simulateHeartRateData()
+                            }) {
+                                Text("Simulate")
+                                    .padding()
+                                    .background(Color.orange.opacity(0.2))
+                                    .cornerRadius(8)
+                            }
+                            }
                         }
+                        .padding()
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(12)
+                        
+                        // 心率图表 - 始终显示，即使没有数据
+                        HeartRateChart(dataPoints: watchBridge.heartRateHistory)
                     }
                     
                     // Daily goal
