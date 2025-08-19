@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct PhysioRLHFApp_2App: App {
-    // 在App级别管理WatchHRBridge，避免在子视图中重复创建
+    // Manage WatchHRBridge at App level to avoid repeated creation in child views
     @StateObject private var watchBridge = WatchHRBridge.shared
     
     var body: some Scene {

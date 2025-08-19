@@ -10,20 +10,20 @@ import Foundation
 import WatchConnectivity
 import Combine
 
-/// iPhone 端桥接：发送命令到手表；接收手表的 BPM 数据
+/// iPhone Bridge: Send commands to watch; Receive BPM data from watch
 final class WatchHRBridge: NSObject, ObservableObject {
     static let shared = WatchHRBridge()
 
-    // 最新 BPM（watch 主动推）
+    // Latest BPM (pushed by watch)
     @Published var lastBPM: Int?
     
-    // 心率数据历史记录
+    // Heart rate data history
     @Published var heartRateHistory: [HeartRateDataPoint] = []
 
-    // 前台直连（只有 iOS & Watch 前台时才会 true）
+    // Foreground direct connection (only true when iOS & Watch are in foreground)
     @Published var isReachable: Bool = false
 
-    // ✅ 是否"已配对且安装了 Watch App"，这是你 UI 要显示"Connected"的依据
+    // ✅ Whether "paired and Watch App installed", this is the basis for your UI to show "Connected"
     @Published var isPairedAndInstalled: Bool = false
 
     private let session: WCSession? = WCSession.isSupported() ? .default : nil
@@ -33,7 +33,7 @@ final class WatchHRBridge: NSObject, ObservableObject {
         if let s = session {
             s.delegate = self
             s.activate()
-            // 初始化同步一次
+                                    // Initial sync once
             #if os(iOS)
             isPairedAndInstalled = s.isPaired && s.isWatchAppInstalled
             #endif
@@ -43,18 +43,18 @@ final class WatchHRBridge: NSObject, ObservableObject {
         }
     }
 
-    // MARK: - Public API 给你的 UI 调用
+    // MARK: - Public API for your UI to call
 
     func startWorkoutOnWatch() { send(["cmd": "start"]) }
     func stopWorkoutOnWatch()  { send(["cmd": "stop"]) }
     func ping()                { send(["cmd": "ping"]) }
 
-    /// 兼容你以前调用的名字
+    /// Compatible with your previous call name
     func sendPingToWatch() { ping() }
 
     func activateIfNeeded() { session?.activate() }
     
-    // 测试功能：模拟心率数据
+    // Test function: simulate heart rate data
     func simulateHeartRateData() {
         let simulatedBPM = Int.random(in: 60...100)
         print("🧪 Simulating heart rate data: \(simulatedBPM) bpm")
@@ -62,11 +62,11 @@ final class WatchHRBridge: NSObject, ObservableObject {
         DispatchQueue.main.async {
             self.lastBPM = simulatedBPM
             
-            // 添加到历史记录
+            // Add to history
             let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: simulatedBPM)
             self.heartRateHistory.append(newDataPoint)
             
-            // 保持最多100个数据点
+            // Keep at most 100 data points
             if self.heartRateHistory.count > 100 {
                 self.heartRateHistory.removeFirst()
             }
@@ -116,7 +116,7 @@ extension WatchHRBridge: WCSessionDelegate {
         }
     }
 
-    /// iOS 专用：配对或安装状态变化（插拔表、安装/卸载 Watch App 时会回调）
+    /// iOS only: Pairing or installation state changes (callback when plugging/unplugging watch, installing/uninstalling Watch App)
     #if os(iOS)
     func sessionWatchStateDidChange(_ session: WCSession) {
         DispatchQueue.main.async {
@@ -126,7 +126,7 @@ extension WatchHRBridge: WCSessionDelegate {
     }
     #endif
 
-    /// 前台直连状态变化
+    /// Foreground direct connection state changes
     func sessionReachabilityDidChange(_ session: WCSession) {
         DispatchQueue.main.async {
             self.isReachable = session.isReachable
@@ -139,7 +139,7 @@ extension WatchHRBridge: WCSessionDelegate {
     func sessionDidDeactivate(_ session: WCSession) { session.activate() }
     #endif
 
-    /// 收到手表推来的消息（心率等）
+    /// Received message pushed from watch (heart rate, etc.)
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         if let bpm = message["bpm"] as? Int {
             print("📱 Received heart rate from Watch: \(bpm) bpm")
@@ -147,20 +147,20 @@ extension WatchHRBridge: WCSessionDelegate {
             DispatchQueue.main.async {
                 self.lastBPM = bpm
                 
-                // 添加到历史记录
-                let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: bpm)
-                self.heartRateHistory.append(newDataPoint)
-                
-                // 保持最多100个数据点，避免内存占用过多
-                if self.heartRateHistory.count > 100 {
-                    self.heartRateHistory.removeFirst()
-                }
+                            // Add to history
+            let newDataPoint = HeartRateDataPoint(timestamp: Date(), heartRate: bpm)
+            self.heartRateHistory.append(newDataPoint)
+            
+            // Keep at most 100 data points to avoid excessive memory usage
+            if self.heartRateHistory.count > 100 {
+                self.heartRateHistory.removeFirst()
+            }
                 
                 print("📊 Heart rate history updated: \(self.heartRateHistory.count) points")
             }
         }
         
-        // 处理ping回复
+        // Handle ping reply
         if message["pong"] != nil {
             print("🏓 Received pong from Watch")
         }

@@ -13,7 +13,7 @@ struct HomeView: View {
 
     var body: some View {
         VStack(spacing: 14) {
-            // 连接状态
+            // Connection status
             HStack {
                 Image(systemName: workoutManager.session?.isReachable == true ? "iphone" : "iphone.slash")
                     .foregroundColor(workoutManager.session?.isReachable == true ? .green : .red)
@@ -23,7 +23,7 @@ struct HomeView: View {
             }
             .padding(.vertical, 4)
             
-            // 心率显示
+            // Heart rate display
             VStack {
                 Text("❤️")
                     .font(.title2)
@@ -35,7 +35,7 @@ struct HomeView: View {
             }
             .padding(.vertical, 8)
 
-            // 控制按钮
+            // Control buttons
             HStack(spacing: 14) {
                 Button(isRunning ? "Stop" : "Start") {
                     if isRunning {
@@ -48,7 +48,7 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
 
                 Button("Ping") {
-                    // 发送ping到iPhone
+                    // Send ping to iPhone
                     if let session = workoutManager.session, session.isReachable {
                         session.sendMessage(["cmd": "ping"], replyHandler: nil, errorHandler: nil)
                     }
@@ -57,7 +57,7 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            // 请求HealthKit权限
+            // Request HealthKit permission
             workoutManager.requestAuthorization { granted in
                 print("Watch HealthKit granted:", granted)
             }

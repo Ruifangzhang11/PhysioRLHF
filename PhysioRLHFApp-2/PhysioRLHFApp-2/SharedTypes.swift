@@ -7,7 +7,7 @@
 
 import Foundation
 
-// 共享的数据类型定义
+// Shared data type definitions
 struct HeartRateDataPoint: Identifiable {
     let id = UUID()
     let timestamp: Date

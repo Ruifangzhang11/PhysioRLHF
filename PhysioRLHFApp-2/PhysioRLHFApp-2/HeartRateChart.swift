@@ -10,7 +10,7 @@ import Charts
 
 struct HeartRateChart: View {
     let dataPoints: [HeartRateDataPoint]
-    let maxDataPoints: Int = 50 // 显示最近50个数据点
+    let maxDataPoints: Int = 50 // Display last 50 data points
     
     private var displayData: [HeartRateDataPoint] {
         if dataPoints.count <= maxDataPoints {
@@ -37,7 +37,7 @@ struct HeartRateChart: View {
                 
                 Spacer()
                 
-                // 实时指示器
+                // Real-time indicator
                 if !dataPoints.isEmpty {
                     HStack(spacing: 4) {
                         Circle()
@@ -55,7 +55,7 @@ struct HeartRateChart: View {
             }
             
             if displayData.isEmpty {
-                // 空状态
+                // Empty state
                 VStack(spacing: 12) {
                     Image(systemName: "heart.fill")
                         .font(.largeTitle)
@@ -70,7 +70,7 @@ struct HeartRateChart: View {
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(12)
             } else {
-                // 心率图表
+                // Heart rate chart
                 Chart(displayData) { dataPoint in
                     LineMark(
                         x: .value("Time", dataPoint.timestamp),
@@ -118,7 +118,7 @@ struct HeartRateChart: View {
                     }
                 }
                 
-                // 统计信息
+                // Statistics
                 HStack(spacing: 20) {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Current")

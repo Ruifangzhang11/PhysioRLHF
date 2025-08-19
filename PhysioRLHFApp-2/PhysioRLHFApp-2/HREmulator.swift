@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-/// 模拟心率流：每5秒输出一个“心率值”，范围 65~95 bpm
+/// Simulated heart rate stream: outputs a "heart rate value" every 5 seconds, range 65~95 bpm
 final class HREmulator {
     static let shared = HREmulator()
 
@@ -22,12 +22,12 @@ final class HREmulator {
         stop()
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
             guard let self else { return }
-            // 随机上下波动 0~6
+            // Random fluctuation 0~6
             let delta = Int.random(in: -6...6)
             current = max(60, min(100, current + delta))
             subject.send(current)
         }
-        // 立即发一个初始值
+        // Send initial value immediately
         subject.send(current)
     }
 

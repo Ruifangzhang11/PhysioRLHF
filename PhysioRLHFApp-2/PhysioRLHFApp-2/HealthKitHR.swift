@@ -24,11 +24,11 @@ final class HealthKitHR: NSObject {
               let hrType = HKObjectType.quantityType(forIdentifier: .heartRate)
         else { return }
 
-        // 只读授权：你之前的 HealthAuth.request 已经做了
+        // Read-only authorization: your previous HealthAuth.request has already done this
         let pred = HKQuery.predicateForSamples(withStart: Date().addingTimeInterval(-60*10),
                                                end: nil, options: .strictStartDate)
 
-        // 初次拿历史 + 持续更新
+        // Get initial history + continuous updates
         let q = HKAnchoredObjectQuery(type: hrType, predicate: pred,
                                       anchor: anchor, limit: HKObjectQueryNoLimit) { [weak self] _, samples, _, newAnchor, _ in
             self?.anchor = newAnchor

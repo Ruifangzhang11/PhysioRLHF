@@ -26,7 +26,7 @@ struct HomeView: View {
     // Mock leaderboard (replace with Supabase aggregation later)
     @State private var leaderboard: [String: Int] = ["You": 0, "Alice": 5, "Bob": 3]
     
-    // 使用环境对象，避免在视图中重复创建
+    // Use environment object to avoid repeated creation in views
     @EnvironmentObject private var watchBridge: WatchHRBridge
 
     // Categories (uses your PairTask / TaskCategory types)
@@ -115,10 +115,10 @@ struct HomeView: View {
                                 .foregroundColor(.blue)
                                 .font(.headline)
                             
-                            // 闪闪的LIVE指示器
+                            // Flashing LIVE indicator
                             if watchBridge.isReachable && watchBridge.lastBPM != nil {
                                 HStack(spacing: 4) {
-                                    // 闪烁的圆点
+                                    // Flashing dot
                                     Circle()
                                         .fill(Color.green)
                                         .frame(width: 8, height: 8)
@@ -130,7 +130,7 @@ struct HomeView: View {
                                             value: watchBridge.isReachable
                                         )
                                     
-                                    // LIVE文字
+                                    // LIVE text
                                     Text("LIVE")
                                         .font(.caption2)
                                         .fontWeight(.bold)
@@ -197,7 +197,7 @@ struct HomeView: View {
                         .background(.ultraThinMaterial)
                         .cornerRadius(12)
                         
-                        // 心率图表 - 始终显示，即使没有数据
+                        // Heart rate chart - always display, even without data
                         HeartRateChart(dataPoints: watchBridge.heartRateHistory)
                     }
                     

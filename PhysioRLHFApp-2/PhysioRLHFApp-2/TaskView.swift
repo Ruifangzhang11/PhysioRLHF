@@ -165,19 +165,19 @@ struct TaskView: View {
 
     // MARK: - 🔄 HR source selection
     private func startHR() {
-        // 先尝试手表
+        // Try watch first
         if WatchHRBridge.shared.isPairedAndInstalled {
-            // 订阅桥接的 bpm
+            // Subscribe to bridge bpm
             hrCancellable = WatchHRBridge.shared.$lastBPM
                 .compactMap { $0 }
                 .receive(on: DispatchQueue.main)
                 .sink { bpm in
                     hrStream.append(bpm)
                 }
-            // 唤醒表开始发送
+            // Wake up watch to start sending
             WatchHRBridge.shared.sendPingToWatch()
         } else {
-            // 没有表则回退到模拟心率
+            // Fallback to simulated heart rate if no watch
             hrCancellable = HREmulator.shared.stream
                 .receive(on: DispatchQueue.main)
                 .sink { hr in hrStream.append(hr) }
@@ -188,7 +188,7 @@ struct TaskView: View {
         timerCancellable?.cancel(); timerCancellable = nil
         hrCancellable?.cancel(); hrCancellable = nil
 
-        // 无需手动停 Watch（手表由用户点 Stop 控制）；这里停模拟源即可
+        // No need to manually stop Watch (watch is controlled by user clicking Stop); just stop the simulation source here
         HREmulator.shared.stop()
     }
 
