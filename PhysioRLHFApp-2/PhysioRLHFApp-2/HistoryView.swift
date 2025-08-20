@@ -14,6 +14,8 @@ struct TaskHistoryRecord: Identifiable, Codable {
     let taskId: String
     let category: String
     let question: String
+    let optionAContent: String
+    let optionBContent: String
     let userChoice: String
     let startTime: Date
     let endTime: Date
@@ -304,6 +306,64 @@ struct TaskDetailView: View {
                                     Circle()
                                         .fill(record.userChoice == "A" ? Color.blue.opacity(0.2) : Color.green.opacity(0.2))
                                 )
+                        }
+                    }
+                    .padding()
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(16)
+                    
+                    // Options Content
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Task Options")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                        
+                        VStack(alignment: .leading, spacing: 12) {
+                            // Option A
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    Text("Option A")
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.blue)
+                                    
+                                    if record.userChoice == "A" {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.blue)
+                                    }
+                                    
+                                    Spacer()
+                                }
+                                
+                                Text(record.optionAContent)
+                                    .font(.body)
+                                    .padding()
+                                    .background(Color.blue.opacity(0.1))
+                                    .cornerRadius(8)
+                            }
+                            
+                            // Option B
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    Text("Option B")
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.green)
+                                    
+                                    if record.userChoice == "B" {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.green)
+                                    }
+                                    
+                                    Spacer()
+                                }
+                                
+                                Text(record.optionBContent)
+                                    .font(.body)
+                                    .padding()
+                                    .background(Color.green.opacity(0.1))
+                                    .cornerRadius(8)
+                            }
                         }
                     }
                     .padding()

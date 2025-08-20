@@ -105,18 +105,20 @@ final class SupabaseClient {
             let startDate = dateFormatter.date(from: record.start_time) ?? Date()
             let endDate = dateFormatter.date(from: record.end_time) ?? Date()
             
-            return TaskHistoryRecord(
-                taskId: record.task_id,
-                category: record.meta?["category"] ?? "Unknown",
-                question: record.prompt.replacingOccurrences(of: "[EN] ", with: ""),
-                userChoice: record.choice ?? "Unknown",
-                startTime: startDate,
-                endTime: endDate,
-                optionAHeartRate: optionAHR,
-                optionBHeartRate: optionBHR,
-                reward: record.reward,
-                meta: record.meta ?? [:]
-            )
+                            return TaskHistoryRecord(
+                    taskId: record.task_id,
+                    category: record.meta?["category"] ?? "Unknown",
+                    question: record.meta?["question"] ?? record.prompt.replacingOccurrences(of: "[EN] ", with: ""),
+                    optionAContent: record.meta?["option_a_content"] ?? "Option A content not available",
+                    optionBContent: record.meta?["option_b_content"] ?? "Option B content not available",
+                    userChoice: record.meta?["user_choice"] ?? record.choice ?? "Unknown",
+                    startTime: startDate,
+                    endTime: endDate,
+                    optionAHeartRate: optionAHR,
+                    optionBHeartRate: optionBHR,
+                    reward: record.reward,
+                    meta: record.meta ?? [:]
+                )
         }
     }
 }

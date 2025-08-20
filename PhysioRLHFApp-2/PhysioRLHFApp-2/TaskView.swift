@@ -138,10 +138,14 @@ struct TaskView: View {
             // Option A completed, collect the data
             optionAHeartRate = hrStream
             print("📊 Option A completed: collected \(optionAHeartRate.count) heart rate samples")
+            // Clear hrStream for option B
+            hrStream.removeAll()
         } else if stage == .readB && s == .decide {
             // Option B completed, collect the data
             optionBHeartRate = hrStream
             print("📊 Option B completed: collected \(optionBHeartRate.count) heart rate samples")
+            // Clear hrStream for decide stage
+            hrStream.removeAll()
         }
         
         stage = s
@@ -282,7 +286,12 @@ struct TaskView: View {
                 "lang":"en-US",
                 "category": title,
                 "option_a_hr": optionASamples.map(String.init).joined(separator: ","),
-                "option_b_hr": optionBSamples.map(String.init).joined(separator: ",")
+                "option_b_hr": optionBSamples.map(String.init).joined(separator: ","),
+                "question": t.question,
+                "option_a_content": t.optionA,
+                "option_b_content": t.optionB,
+                "user_choice": selected == "A" ? "A" : "B",
+                "choice_details": selected == "A" ? "User chose Option A" : "User chose Option B"
             ]
         )
 
