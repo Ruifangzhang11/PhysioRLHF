@@ -8,59 +8,6 @@
 import SwiftUI
 import Charts
 
-// MARK: - Task History Data Model
-struct TaskHistoryRecord: Identifiable, Codable {
-    let id = UUID()
-    let taskId: String
-    let category: String
-    let question: String
-    let optionAContent: String
-    let optionBContent: String
-    let userChoice: String
-    let startTime: Date
-    let endTime: Date
-    let optionAHeartRate: [Int]
-    let optionBHeartRate: [Int]
-    let reward: Double
-    let meta: [String: String]
-    
-    var duration: TimeInterval {
-        endTime.timeIntervalSince(startTime)
-    }
-    
-    var optionADuration: TimeInterval {
-        // Parse stages from meta to get optionA duration
-        if let stages = meta["stages"] {
-            let components = stages.components(separatedBy: "|")
-            if components.count >= 1 {
-                let optionAComponent = components[0]
-                if let startIndex = optionAComponent.firstIndex(of: "("),
-                   let endIndex = optionAComponent.lastIndex(of: ")") {
-                    let durationString = String(optionAComponent[optionAComponent.index(after: startIndex)..<endIndex])
-                    return Double(durationString) ?? 20.0
-                }
-            }
-        }
-        return 20.0 // Default fallback
-    }
-    
-    var optionBDuration: TimeInterval {
-        // Parse stages from meta to get optionB duration
-        if let stages = meta["stages"] {
-            let components = stages.components(separatedBy: "|")
-            if components.count >= 2 {
-                let optionBComponent = components[1]
-                if let startIndex = optionBComponent.firstIndex(of: "("),
-                   let endIndex = optionBComponent.lastIndex(of: ")") {
-                    let durationString = String(optionBComponent[optionBComponent.index(after: startIndex)..<endIndex])
-                    return Double(durationString) ?? 20.0
-                }
-            }
-        }
-        return 20.0 // Default fallback
-    }
-}
-
 // MARK: - History View
 struct HistoryView: View {
     @State private var taskHistory: [TaskHistoryRecord] = []
@@ -208,7 +155,7 @@ struct TaskHistoryCard: View {
                     
                     Spacer()
                     
-                    Text("Reward: \(String(format: "%.2f", record.reward))")
+                    Text("Reward: \(String(format: "%.2f", record.reward ?? 0.0))")
                         .font(.caption)
                         .fontWeight(.medium)
                         .foregroundColor(.orange)
@@ -393,7 +340,7 @@ struct TaskDetailView: View {
                             DetailRow(label: "Start Time", value: record.startTime.formatted(date: .abbreviated, time: .shortened))
                             DetailRow(label: "End Time", value: record.endTime.formatted(date: .abbreviated, time: .shortened))
                             DetailRow(label: "Duration", value: "\(Int(record.duration))s")
-                            DetailRow(label: "Reward", value: String(format: "%.2f", record.reward))
+                            DetailRow(label: "Reward", value: String(format: "%.2f", record.reward ?? 0.0))
                             DetailRow(label: "App Version", value: record.meta["app_version"] ?? "Unknown")
                         }
                     }

@@ -106,9 +106,11 @@
 				HistoryView.swift,
 				HomeView.swift,
 				HREmulator.swift,
+				ProfileView.swift,
 				SharedTypes.swift,
 				SupabaseClient.swift,
 				TaskModels.swift,
+				TaskPage.swift,
 				TaskView.swift,
 				WatchHRBridge.swift,
 			);

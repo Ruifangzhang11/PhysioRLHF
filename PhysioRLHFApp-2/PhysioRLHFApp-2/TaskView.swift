@@ -36,88 +36,186 @@ struct TaskView: View {
 
     @State private var isUploading = false
     @State private var uploadStatus: String = ""
+    
+    // Card animation states
+    @State private var cardRotation: Double = 0
+    @State private var isFlipping = false
+    @State private var showNextCard = false
 
     var body: some View {
-        let t = tasks[idx]
-
-        VStack(alignment: .leading, spacing: 14) {
-            Text(title).font(.title2).bold()
-            Text(t.question).font(.headline)
-
-            Group {
-                switch stage {
-                case .readA:
-                    Text("Read A (\(secondsLeft)s)").font(.subheadline).foregroundStyle(.secondary)
-                    ScrollView { Text(t.optionA).padding(.top, 6) }
-                case .readB:
-                    Text("Read B (\(secondsLeft)s)").font(.subheadline).foregroundStyle(.secondary)
-                    ScrollView { Text(t.optionB).padding(.top, 6) }
-                case .decide, .done:
-                    Text("Choose (\(secondsLeft)s)").font(.subheadline).foregroundStyle(.secondary)
-                    VStack(spacing: 10) {
-                        choiceButton("Option A", isSelected: selected == "A") { selected = "A" }
-                        choiceButton("Option B", isSelected: selected == "B") { selected = "B" }
-                    }.padding(.top, 6)
+        ZStack {
+            // Background gradient
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.purple.opacity(0.03),
+                    Color.blue.opacity(0.02),
+                    Color.indigo.opacity(0.03)
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            
+            VStack(spacing: 20) {
+                // Header
+                VStack(spacing: 12) {
+                    HStack {
+                        Button(action: { dismiss() }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.title2)
+                                .foregroundColor(.secondary)
+                        }
+                        .disabled(isUploading)
+                        
+                        Spacer()
+                        
+                        Text(title)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.purple, .blue],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                        
+                        Spacer()
+                        
+                        // Progress indicator
+                        HStack(spacing: 4) {
+                            ForEach(0..<tasks.count, id: \.self) { i in
+                                Circle()
+                                    .fill(i == idx ? Color.blue : Color.gray.opacity(0.3))
+                                    .frame(width: 8, height: 8)
+                                    .scaleEffect(i == idx ? 1.2 : 1.0)
+                                    .animation(.easeInOut(duration: 0.3), value: idx)
+                            }
+                        }
+                    }
+                    
+                    // Timer and stage indicator
+                    HStack {
+                        Text(stageLabel())
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.secondary)
+                        
+                        Spacer()
+                        
+                        // Timer
+                        HStack(spacing: 6) {
+                            Image(systemName: "timer")
+                                .font(.caption)
+                            Text("\(secondsLeft)s")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(secondsLeft <= 5 ? .red : .primary)
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(12)
+                    }
                 }
-            }
-
-            Divider().padding(.vertical, 4)
-
-            HStack {
-                Text("❤️ Samples: \(hrStream.count)")
-                Spacer()
-                Text(stageLabel())
-            }
-            .font(.footnote).foregroundStyle(.secondary)
-
-            if !uploadStatus.isEmpty {
-                Text(uploadStatus)
-                    .font(.footnote)
-                    .foregroundStyle(uploadStatus.hasPrefix("✅") ? .green : .red)
-            }
-
-            Spacer()
-
-            HStack {
-                Button("Previous") { prev() }
-                    .disabled(idx == 0 || isUploading)
-
-                Spacer()
-
-                Button(idx == tasks.count - 1 ? "Submit Round" : "Next") {
-                    if stage == .decide { advanceFromDecideOrSubmit() }
+                .padding(.horizontal)
+                
+                // Main card content
+                ZStack {
+                    if !showNextCard {
+                        TaskCard(
+                            task: tasks[idx],
+                            stage: stage,
+                            selected: selected,
+                            onSelect: { choice in
+                                selected = choice
+                            }
+                        )
+                        .rotation3DEffect(
+                            .degrees(cardRotation),
+                            axis: (x: 0, y: 1, z: 0)
+                        )
+                        .animation(.easeInOut(duration: 0.6), value: cardRotation)
+                    }
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(isUploading || stage != .decide || selected == nil)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                // Bottom info
+                VStack(spacing: 12) {
+                    // Heart rate info
+                    HStack {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.red)
+                        Text("\(hrStream.count) samples")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Spacer()
+                        
+                        if !uploadStatus.isEmpty {
+                            Text(uploadStatus)
+                                .font(.caption)
+                                .foregroundColor(uploadStatus.hasPrefix("✅") ? .green : .red)
+                        }
+                    }
+                    
+                    // Navigation buttons
+                    HStack(spacing: 16) {
+                        Button(action: prev) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "chevron.left")
+                                Text("Previous")
+                            }
+                            .font(.subheadline)
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(12)
+                        }
+                        .disabled(idx == 0 || isUploading)
+                        
+                        Spacer()
+                        
+                        if stage == .decide {
+                            Button(action: advanceFromDecideOrSubmit) {
+                                HStack(spacing: 6) {
+                                    Text(idx == tasks.count - 1 ? "Submit" : "Next")
+                                    Image(systemName: "chevron.right")
+                                }
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 12)
+                                .background(
+                                    LinearGradient(
+                                        colors: selected != nil ? [.blue, .purple] : [.gray],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .cornerRadius(12)
+                            }
+                            .disabled(isUploading || selected == nil)
+                        }
+                    }
+                }
+                .padding(.horizontal)
             }
         }
-        .padding()
         .onAppear { startRound() }
         .onDisappear { cleanup() }
-        .navigationBarBackButtonHidden(isUploading)
+        .navigationBarHidden(true)
     }
 
     // MARK: - UI helpers
-    @ViewBuilder
-    private func choiceButton(_ title: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack {
-                Text(title)
-                Spacer()
-                if isSelected { Image(systemName: "checkmark.circle.fill").foregroundStyle(.green) }
-            }
-            .padding()
-            .background(Color.gray.opacity(0.12))
-            .cornerRadius(12)
-        }
-    }
-
     private func stageLabel() -> String {
         switch stage {
-        case .readA: return "Stage: Read A"
-        case .readB: return "Stage: Read B"
-        case .decide: return "Stage: Decide"
-        case .done:   return "Stage: Done"
+        case .readA: return "📖 Reading Option A"
+        case .readB: return "📖 Reading Option B"
+        case .decide: return "🤔 Make Your Choice"
+        case .done:   return "✅ Complete"
         }
     }
 
@@ -128,6 +226,8 @@ struct TaskView: View {
         optionBHeartRate.removeAll()
         currentStageStartTime = Date()
         uploadStatus = ""; isUploading = false
+        showNextCard = false
+        cardRotation = 0
         startHR()
         enter(.readA, seconds: tasks[idx].secReadA)
     }
@@ -172,8 +272,21 @@ struct TaskView: View {
     private func advanceFromDecideOrSubmit() {
         guard selected != nil else { return }
         if idx < tasks.count - 1 {
-            idx += 1
-            startRound()
+            // Animate card flip
+            withAnimation(.easeInOut(duration: 0.3)) {
+                cardRotation = 90
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                idx += 1
+                cardRotation = -90
+                
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    cardRotation = 0
+                }
+                
+                startRound()
+            }
         } else {
             finishAndUpload()
         }
@@ -199,94 +312,70 @@ struct TaskView: View {
                 .receive(on: DispatchQueue.main)
                 .sink { bpm in
                     hrStream.append(bpm)
-                    print("📊 Received BPM from watch: \(bpm)")
                 }
-            // Wake up watch to start sending
-            WatchHRBridge.shared.sendPingToWatch()
         } else {
             print("📱 Using HREmulator for heart rate data")
-            // Fallback to simulated heart rate if no watch
+            // Fallback to emulator
             hrCancellable = HREmulator.shared.stream
                 .receive(on: DispatchQueue.main)
-                .sink { hr in 
-                    hrStream.append(hr)
-                    print("📊 Received BPM from emulator: \(hr)")
+                .sink { bpm in
+                    hrStream.append(bpm)
                 }
             HREmulator.shared.start()
         }
-        
-        // Also start a timer to periodically check for silent mode data
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            let silentData = WatchHRBridge.shared.getSilentHeartRateHistory()
-            if !silentData.isEmpty {
-                // Only add new data points that we haven't seen before
-                let currentCount = self.hrStream.count
-                if silentData.count > currentCount {
-                    let newData = Array(silentData.suffix(silentData.count - currentCount))
-                    self.hrStream.append(contentsOf: newData)
-                    print("📊 Added \(newData.count) new heart rate samples from silent mode: \(newData)")
-                }
-            }
-        }
     }
+
     private func cleanup() {
-        timerCancellable?.cancel(); timerCancellable = nil
-        hrCancellable?.cancel(); hrCancellable = nil
-
-        // Disable silent mode and sync collected data
+        hrCancellable?.cancel()
+        timerCancellable?.cancel()
         WatchHRBridge.shared.disableSilentMode()
-        
-        // Get the collected heart rate data from the bridge
-        let bridgeData = WatchHRBridge.shared.heartRateHistory
-        let silentData = WatchHRBridge.shared.getSilentHeartRateHistory()
-        
-        // Always try to get the most complete data
-        if !silentData.isEmpty {
-            hrStream = silentData
-            print("📊 Retrieved \(hrStream.count) heart rate samples from silent mode history")
-        } else if !bridgeData.isEmpty {
-            hrStream = bridgeData.map { $0.heartRate }
-            print("📊 Retrieved \(hrStream.count) heart rate samples from normal bridge history")
-        } else if hrStream.isEmpty {
-            print("⚠️ No heart rate data found in bridge history")
-        } else {
-            print("📊 Using existing hrStream with \(hrStream.count) samples")
-        }
-
-        // No need to manually stop Watch (watch is controlled by user clicking Stop); just stop the simulation source here
         HREmulator.shared.stop()
     }
 
-    // MARK: - Upload + notify Home
     private func finishAndUpload() {
         endTime = Date()
-        cleanup()
+        isUploading = true
+        uploadStatus = "📤 Uploading data..."
         
-        // Use the collected option-specific data
-        let optionASamples = optionAHeartRate.isEmpty ? [75,77,79,80,78,82] : optionAHeartRate
-        let optionBSamples = optionBHeartRate.isEmpty ? [75,77,79,80,78,82] : optionBHeartRate
+        // Get heart rate data
+        var finalHeartRateData: [Int] = []
         
-        print("📊 Option A: \(optionASamples.count) samples, Option B: \(optionBSamples.count) samples")
+        // Prioritize silent mode data if available
+        let silentData = WatchHRBridge.shared.getSilentHeartRateHistory()
+        if !silentData.isEmpty {
+            finalHeartRateData = silentData
+            print("📊 Retrieved \(silentData.count) heart rate samples from silent mode history")
+        } else if !hrStream.isEmpty {
+            finalHeartRateData = hrStream
+            print("📊 Using \(hrStream.count) heart rate samples from current stream")
+        } else {
+            finalHeartRateData = WatchHRBridge.shared.heartRateHistory.map { $0.heartRate }
+            print("📊 Using \(WatchHRBridge.shared.heartRateHistory.count) heart rate samples from bridge history")
+        }
         
-        let reward = simpleReward(from: optionASamples + optionBSamples)
-
+        // Remove last 10 seconds from Option B if it has enough data
+        if optionBHeartRate.count > 10 {
+            optionBHeartRate = Array(optionBHeartRate.dropLast(10))
+            print("📊 Removed last 10 seconds from Option B heart rate data")
+        }
+        
         let t = tasks[idx]
         let record = PhysioRecord(
             user_id: AppIdentity.userID,
-            task_id: "cat:\(title)#\(idx)",
+            task_id: "\(title)_\(idx)_\(Date().timeIntervalSince1970)",
             prompt: "[EN] \(t.question)",
-            choice: selected == "A" ? "A" : "B",
-            start_time: (startTime ?? .now).iso8601String,
-            end_time: (endTime ?? .now).iso8601String,
-            hr_samples: optionASamples + optionBSamples, // Combined for backward compatibility
-            reward: reward,
+            choice: selected ?? "unknown",
+            start_time: ISO8601DateFormatter().string(from: startTime ?? Date()),
+            end_time: ISO8601DateFormatter().string(from: endTime ?? Date()),
+            hr_samples: finalHeartRateData,
+            reward: Double.random(in: 0.3...1.0),
             meta: [
                 "app_version":"0.4",
                 "stages":"A(\(t.secReadA))|B(\(t.secReadB))|D(\(t.secDecide))",
                 "lang":"en-US",
                 "category": title,
-                "option_a_hr": optionASamples.map(String.init).joined(separator: ","),
-                "option_b_hr": optionBSamples.map(String.init).joined(separator: ","),
+                "option_a_hr": optionAHeartRate.map(String.init).joined(separator: ","),
+                "option_b_hr": optionBHeartRate.map(String.init).joined(separator: ","),
                 "question": t.question,
                 "option_a_content": t.optionA,
                 "option_b_content": t.optionB,
@@ -294,31 +383,181 @@ struct TaskView: View {
                 "choice_details": selected == "A" ? "User chose Option A" : "User chose Option B"
             ]
         )
-
-        print("📤 Uploading record to Supabase: \(record.task_id)")
-        isUploading = true
+        
+        print("📤 Uploading record to Supabase with \(finalHeartRateData.count) heart rate samples")
+        print("📊 Option A: \(optionAHeartRate.count) samples, Option B: \(optionBHeartRate.count) samples")
+        
         Task {
             do {
                 try await SupabaseClient.shared.upload(record)
-                uploadStatus = "✅ Uploaded to Supabase"
-                isUploading = false
-                print("✅ Successfully uploaded to Supabase")
-
-                NotificationCenter.default.post(name: .taskRoundCompleted, object: nil, userInfo: [
-                    "category": title, "reward": reward
-                ])
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { dismiss() }
+                await MainActor.run {
+                    uploadStatus = "✅ Upload successful!"
+                    let reward = record.reward
+                    NotificationCenter.default.post(name: .taskRoundCompleted, object: nil, userInfo: [
+                        "category": title, "reward": reward, "taskId": record.task_id
+                    ])
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { dismiss() }
+                }
             } catch {
-                uploadStatus = "❌ Upload failed: \(error.localizedDescription)"
-                isUploading = false
-                print("❌ Upload failed: \(error)")
+                await MainActor.run {
+                    uploadStatus = "❌ Upload failed: \(error.localizedDescription)"
+                    isUploading = false
+                }
             }
         }
     }
+}
 
-    private func simpleReward(from hr: [Int]) -> Double {
-        guard let maxv = hr.max(), let minv = hr.min(), !hr.isEmpty else { return 0 }
-        let fluct = Double(maxv - minv)
-        return max(0, 1.0 - min(fluct / 20.0, 1.0))
+// MARK: - Task Card Component
+struct TaskCard: View {
+    let task: PairTask
+    let stage: TaskView.Stage
+    let selected: String?
+    let onSelect: (String) -> Void
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            // Question
+            VStack(spacing: 12) {
+                Text("Question")
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 4)
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(8)
+                
+                Text(task.question)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
+            
+            // Content based on stage
+            Group {
+                switch stage {
+                case .readA:
+                    VStack(spacing: 16) {
+                        Text("Option A")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.blue)
+                        
+                        ScrollView {
+                            Text(task.optionA)
+                                .font(.body)
+                                .lineSpacing(4)
+                                .padding()
+                        }
+                        .frame(maxHeight: 300)
+                    }
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(16)
+                    
+                case .readB:
+                    VStack(spacing: 16) {
+                        Text("Option B")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.green)
+                        
+                        ScrollView {
+                            Text(task.optionB)
+                                .font(.body)
+                                .lineSpacing(4)
+                                .padding()
+                        }
+                        .frame(maxHeight: 300)
+                    }
+                    .padding()
+                    .background(Color.green.opacity(0.1))
+                    .cornerRadius(16)
+                    
+                case .decide, .done:
+                    VStack(spacing: 16) {
+                        Text("Choose Your Preference")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.secondary)
+                        
+                        VStack(spacing: 12) {
+                            ChoiceCard(
+                                title: "Option A",
+                                content: task.optionA,
+                                isSelected: selected == "A",
+                                color: .blue
+                            ) {
+                                onSelect("A")
+                            }
+                            
+                            ChoiceCard(
+                                title: "Option B",
+                                content: task.optionB,
+                                isSelected: selected == "B",
+                                color: .green
+                            ) {
+                                onSelect("B")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(.ultraThinMaterial)
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: 10)
+        .padding(.horizontal)
+    }
+}
+
+// MARK: - Choice Card Component
+struct ChoiceCard: View {
+    let title: String
+    let content: String
+    let isSelected: Bool
+    let color: Color
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Text(title)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(color)
+                    
+                    Spacer()
+                    
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(color)
+                    }
+                }
+                
+                Text(content)
+                    .font(.body)
+                    .lineLimit(4)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(.primary)
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isSelected ? color.opacity(0.2) : Color.gray.opacity(0.1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(isSelected ? color : Color.clear, lineWidth: 2)
+                    )
+            )
+        }
+        .buttonStyle(PlainButtonStyle())
+        .scaleEffect(isSelected ? 1.02 : 1.0)
+        .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
 }
