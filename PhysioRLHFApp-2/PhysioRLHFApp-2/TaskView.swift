@@ -28,6 +28,9 @@ struct TaskView: View {
     @State private var endTime: Date?
     @State private var selected: String?
     @State private var hrStream: [Int] = []
+    @State private var optionAHeartRate: [Int] = []
+    @State private var optionBHeartRate: [Int] = []
+    @State private var currentStageStartTime: Date = Date()
     @State private var timerCancellable: AnyCancellable?
     @State private var hrCancellable: AnyCancellable?
 
@@ -121,14 +124,29 @@ struct TaskView: View {
     // MARK: - Flow
     private func startRound() {
         startTime = Date(); endTime = nil; selected = nil; hrStream.removeAll()
+        optionAHeartRate.removeAll()
+        optionBHeartRate.removeAll()
+        currentStageStartTime = Date()
         uploadStatus = ""; isUploading = false
         startHR()
         enter(.readA, seconds: tasks[idx].secReadA)
     }
 
     private func enter(_ s: Stage, seconds: Int) {
+        // Collect data from previous stage before switching
+        if stage == .readA && s == .readB {
+            // Option A completed, collect the data
+            optionAHeartRate = hrStream
+            print("📊 Option A completed: collected \(optionAHeartRate.count) heart rate samples")
+        } else if stage == .readB && s == .decide {
+            // Option B completed, collect the data
+            optionBHeartRate = hrStream
+            print("📊 Option B completed: collected \(optionBHeartRate.count) heart rate samples")
+        }
+        
         stage = s
         secondsLeft = seconds
+        currentStageStartTime = Date()
         timerCancellable?.cancel()
         timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
@@ -169,22 +187,42 @@ struct TaskView: View {
         WatchHRBridge.shared.enableSilentMode()
         
         // Try watch first
-        if WatchHRBridge.shared.isPairedAndInstalled {
+        if WatchHRBridge.shared.isWatchConnected {
+            print("📱 Using Watch for heart rate data")
             // Subscribe to bridge bpm
             hrCancellable = WatchHRBridge.shared.$lastBPM
                 .compactMap { $0 }
                 .receive(on: DispatchQueue.main)
                 .sink { bpm in
                     hrStream.append(bpm)
+                    print("📊 Received BPM from watch: \(bpm)")
                 }
             // Wake up watch to start sending
             WatchHRBridge.shared.sendPingToWatch()
         } else {
+            print("📱 Using HREmulator for heart rate data")
             // Fallback to simulated heart rate if no watch
             hrCancellable = HREmulator.shared.stream
                 .receive(on: DispatchQueue.main)
-                .sink { hr in hrStream.append(hr) }
+                .sink { hr in 
+                    hrStream.append(hr)
+                    print("📊 Received BPM from emulator: \(hr)")
+                }
             HREmulator.shared.start()
+        }
+        
+        // Also start a timer to periodically check for silent mode data
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+            let silentData = WatchHRBridge.shared.getSilentHeartRateHistory()
+            if !silentData.isEmpty {
+                // Only add new data points that we haven't seen before
+                let currentCount = self.hrStream.count
+                if silentData.count > currentCount {
+                    let newData = Array(silentData.suffix(silentData.count - currentCount))
+                    self.hrStream.append(contentsOf: newData)
+                    print("📊 Added \(newData.count) new heart rate samples from silent mode: \(newData)")
+                }
+            }
         }
     }
     private func cleanup() {
@@ -193,6 +231,23 @@ struct TaskView: View {
 
         // Disable silent mode and sync collected data
         WatchHRBridge.shared.disableSilentMode()
+        
+        // Get the collected heart rate data from the bridge
+        let bridgeData = WatchHRBridge.shared.heartRateHistory
+        let silentData = WatchHRBridge.shared.getSilentHeartRateHistory()
+        
+        // Always try to get the most complete data
+        if !silentData.isEmpty {
+            hrStream = silentData
+            print("📊 Retrieved \(hrStream.count) heart rate samples from silent mode history")
+        } else if !bridgeData.isEmpty {
+            hrStream = bridgeData.map { $0.heartRate }
+            print("📊 Retrieved \(hrStream.count) heart rate samples from normal bridge history")
+        } else if hrStream.isEmpty {
+            print("⚠️ No heart rate data found in bridge history")
+        } else {
+            print("📊 Using existing hrStream with \(hrStream.count) samples")
+        }
 
         // No need to manually stop Watch (watch is controlled by user clicking Stop); just stop the simulation source here
         HREmulator.shared.stop()
@@ -202,9 +257,14 @@ struct TaskView: View {
     private func finishAndUpload() {
         endTime = Date()
         cleanup()
-        var samples = hrStream
-        if samples.isEmpty { samples = [75,77,79,80,78,82] }
-        let reward = simpleReward(from: samples)
+        
+        // Use the collected option-specific data
+        let optionASamples = optionAHeartRate.isEmpty ? [75,77,79,80,78,82] : optionAHeartRate
+        let optionBSamples = optionBHeartRate.isEmpty ? [75,77,79,80,78,82] : optionBHeartRate
+        
+        print("📊 Option A: \(optionASamples.count) samples, Option B: \(optionBSamples.count) samples")
+        
+        let reward = simpleReward(from: optionASamples + optionBSamples)
 
         let t = tasks[idx]
         let record = PhysioRecord(
@@ -214,22 +274,26 @@ struct TaskView: View {
             choice: selected == "A" ? "A" : "B",
             start_time: (startTime ?? .now).iso8601String,
             end_time: (endTime ?? .now).iso8601String,
-            hr_samples: samples,
+            hr_samples: optionASamples + optionBSamples, // Combined for backward compatibility
             reward: reward,
             meta: [
                 "app_version":"0.4",
                 "stages":"A(\(t.secReadA))|B(\(t.secReadB))|D(\(t.secDecide))",
                 "lang":"en-US",
-                "category": title
+                "category": title,
+                "option_a_hr": optionASamples.map(String.init).joined(separator: ","),
+                "option_b_hr": optionBSamples.map(String.init).joined(separator: ",")
             ]
         )
 
+        print("📤 Uploading record to Supabase: \(record.task_id)")
         isUploading = true
         Task {
             do {
                 try await SupabaseClient.shared.upload(record)
                 uploadStatus = "✅ Uploaded to Supabase"
                 isUploading = false
+                print("✅ Successfully uploaded to Supabase")
 
                 NotificationCenter.default.post(name: .taskRoundCompleted, object: nil, userInfo: [
                     "category": title, "reward": reward
@@ -238,6 +302,7 @@ struct TaskView: View {
             } catch {
                 uploadStatus = "❌ Upload failed: \(error.localizedDescription)"
                 isUploading = false
+                print("❌ Upload failed: \(error)")
             }
         }
     }

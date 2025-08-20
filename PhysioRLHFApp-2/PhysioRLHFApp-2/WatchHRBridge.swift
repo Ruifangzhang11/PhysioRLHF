@@ -23,8 +23,11 @@ final class WatchHRBridge: NSObject, ObservableObject {
     // Foreground direct connection (only true when iOS & Watch are in foreground)
     @Published var isReachable: Bool = false
 
-    // ✅ Whether "paired and Watch App installed", this is the basis for your UI to show "Connected"
-    @Published var isPairedAndInstalled: Bool = false
+    // ✅ Whether watch is actually connected and reachable
+    @Published var isWatchConnected: Bool = false
+    
+    // Workout state tracking
+    @Published var isWorkoutActive: Bool = false
     
     // Silent mode - prevent UI updates during task execution
     var silentMode: Bool = false
@@ -33,7 +36,7 @@ final class WatchHRBridge: NSObject, ObservableObject {
     private var silentLastBPM: Int?
     private var silentHeartRateHistory: [HeartRateDataPoint] = []
 
-    private let session: WCSession? = WCSession.isSupported() ? .default : nil
+    let session: WCSession? = WCSession.isSupported() ? .default : nil
 
     private override init() {
         super.init()
@@ -42,7 +45,7 @@ final class WatchHRBridge: NSObject, ObservableObject {
             s.activate()
                                     // Initial sync once
             #if os(iOS)
-            isPairedAndInstalled = s.isPaired && s.isWatchAppInstalled
+            isWatchConnected = s.isPaired && s.isWatchAppInstalled && s.isReachable
             #endif
             isReachable = s.isReachable
         } else {
@@ -52,14 +55,36 @@ final class WatchHRBridge: NSObject, ObservableObject {
 
     // MARK: - Public API for your UI to call
 
-    func startWorkoutOnWatch() { send(["cmd": "start"]) }
-    func stopWorkoutOnWatch()  { send(["cmd": "stop"]) }
+    func startWorkoutOnWatch() { 
+        send(["cmd": "start"])
+        isWorkoutActive = true
+    }
+    func stopWorkoutOnWatch()  { 
+        send(["cmd": "stop"])
+        isWorkoutActive = false
+    }
     func ping()                { send(["cmd": "ping"]) }
+    func keepWatchScreenOn()   { send(["cmd": "keepScreenOn"]) }
+    func allowWatchScreenSleep() { send(["cmd": "allowScreenSleep"]) }
 
     /// Compatible with your previous call name
     func sendPingToWatch() { ping() }
 
-    func activateIfNeeded() { session?.activate() }
+    func activateIfNeeded() { 
+        session?.activate()
+        // Force update connection status after activation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if let s = self.session {
+                #if os(iOS)
+                self.isWatchConnected = s.isPaired && s.isWatchAppInstalled && s.isReachable
+                print("📱 Force refreshed connection status - Paired: \(s.isPaired), Installed: \(s.isWatchAppInstalled), Reachable: \(s.isReachable), Connected: \(self.isWatchConnected)")
+                #endif
+                self.isReachable = s.isReachable
+            }
+        }
+    }
+    
+
     
     // Test function: simulate heart rate data
     func simulateHeartRateData() {
@@ -121,6 +146,11 @@ final class WatchHRBridge: NSObject, ObservableObject {
         
         print("🔊 Silent mode disabled - \(heartRateHistory.count) data points synced")
     }
+    
+    // Get silent mode heart rate data without disabling silent mode
+    func getSilentHeartRateHistory() -> [Int] {
+        return silentHeartRateHistory.map { $0.heartRate }
+    }
 
     private func send(_ message: [String: Any]) {
         guard let s = session else { return }
@@ -157,7 +187,10 @@ extension WatchHRBridge: WCSessionDelegate {
 
         DispatchQueue.main.async {
             #if os(iOS)
-            self.isPairedAndInstalled = session.isPaired && session.isWatchAppInstalled
+            self.isWatchConnected = session.isPaired && session.isWatchAppInstalled && session.isReachable
+            print("📱 Connection status updated - Paired: \(session.isPaired), Installed: \(session.isWatchAppInstalled), Reachable: \(session.isReachable), Connected: \(self.isWatchConnected)")
+            #else
+            print("📱 Connection status updated - Reachable: \(session.isReachable)")
             #endif
             self.isReachable = session.isReachable
         }
@@ -167,8 +200,8 @@ extension WatchHRBridge: WCSessionDelegate {
     #if os(iOS)
     func sessionWatchStateDidChange(_ session: WCSession) {
         DispatchQueue.main.async {
-            self.isPairedAndInstalled = session.isPaired && session.isWatchAppInstalled
-            print("👀 watch state -> paired:\(session.isPaired) installed:\(session.isWatchAppInstalled)")
+            self.isWatchConnected = session.isPaired && session.isWatchAppInstalled && session.isReachable
+            print("👀 Watch state changed -> Paired: \(session.isPaired), Installed: \(session.isWatchAppInstalled), Reachable: \(session.isReachable), Connected: \(self.isWatchConnected)")
         }
     }
     #endif
@@ -177,7 +210,12 @@ extension WatchHRBridge: WCSessionDelegate {
     func sessionReachabilityDidChange(_ session: WCSession) {
         DispatchQueue.main.async {
             self.isReachable = session.isReachable
-            print("🔄 reachability -> \(session.isReachable)")
+            #if os(iOS)
+            self.isWatchConnected = session.isPaired && session.isWatchAppInstalled && session.isReachable
+            print("🔄 Reachability changed -> Reachable: \(session.isReachable), Connected: \(self.isWatchConnected)")
+            #else
+            print("🔄 Reachability changed -> Reachable: \(session.isReachable)")
+            #endif
         }
     }
 
@@ -188,10 +226,21 @@ extension WatchHRBridge: WCSessionDelegate {
 
     /// Received message pushed from watch (heart rate, etc.)
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        if let bpm = message["bpm"] as? Int {
+        handleHeartRateData(message)
+    }
+    
+    /// Received application context update from watch (works in background)
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        print("📱 Received application context from Watch")
+        handleHeartRateData(applicationContext)
+    }
+    
+    private func handleHeartRateData(_ data: [String : Any]) {
+        if let bpm = data["bpm"] as? Int {
             print("📱 Received heart rate from Watch: \(bpm) bpm")
             
             DispatchQueue.main.async {
+                
                 if self.silentMode {
                     // Silent mode: only update private properties, don't trigger UI updates
                     self.silentLastBPM = bpm
@@ -202,7 +251,7 @@ extension WatchHRBridge: WCSessionDelegate {
                     if self.silentHeartRateHistory.count > 100 {
                         self.silentHeartRateHistory.removeFirst()
                     }
-                    print("📊 Heart rate collected silently: \(bpm) bpm")
+                    print("📊 Heart rate collected silently: \(bpm) bpm (total: \(self.silentHeartRateHistory.count))")
                 } else {
                     // Normal mode: update published properties
                     self.lastBPM = bpm
@@ -222,7 +271,7 @@ extension WatchHRBridge: WCSessionDelegate {
         }
         
         // Handle ping reply
-        if message["pong"] != nil {
+        if data["pong"] != nil {
             print("🏓 Received pong from Watch")
         }
     }

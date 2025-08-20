@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import WatchKit
 
 @main
 struct PhysioRLHF_watch_Watch_AppApp: App {
+    @WKExtensionDelegateAdaptor(ExtensionDelegate.self) var extensionDelegate
+    
     var body: some Scene {
         WindowGroup {
             HomeView()

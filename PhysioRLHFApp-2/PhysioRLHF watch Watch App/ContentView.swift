@@ -15,13 +15,27 @@ struct HomeView: View {
         VStack(spacing: 14) {
             // Connection status
             HStack {
-                Image(systemName: workoutManager.session?.isReachable == true ? "iphone" : "iphone.slash")
-                    .foregroundColor(workoutManager.session?.isReachable == true ? .green : .red)
-                Text(workoutManager.session?.isReachable == true ? "Connected" : "Not Connected")
+                Image(systemName: workoutManager.session?.activationState == .activated ? "iphone" : "iphone.slash")
+                    .foregroundColor(workoutManager.session?.activationState == .activated ? .green : .red)
+                Text(workoutManager.session?.activationState == .activated ? "Connected" : "Not Connected")
                     .font(.caption)
-                    .foregroundColor(workoutManager.session?.isReachable == true ? .green : .red)
+                    .foregroundColor(workoutManager.session?.activationState == .activated ? .green : .red)
             }
             .padding(.vertical, 4)
+            
+
+            
+            // Screen always on status
+            if workoutManager.isScreenAlwaysOn {
+                HStack {
+                    Image(systemName: "lightbulb.fill")
+                        .foregroundColor(.yellow)
+                    Text("Screen Always On")
+                        .font(.caption)
+                        .foregroundColor(.yellow)
+                }
+                .padding(.vertical, 2)
+            }
             
             // Heart rate display
             VStack {

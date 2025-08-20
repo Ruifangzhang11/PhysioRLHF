@@ -13,6 +13,41 @@ import Charts
 // HomeView: categories, daily goals, leaderboard, Health
 // ======================================================
 
+struct GlassGradientButtonStyle: ButtonStyle {
+    let isActive: Bool
+    let gradientColors: [Color]
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: isActive ? gradientColors : gradientColors.map { $0.opacity(0.3) }),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.white.opacity(0.3), Color.clear]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1
+                            )
+                    )
+                    .shadow(color: isActive ? (gradientColors.first?.opacity(0.3) ?? Color.clear) : Color.clear, radius: 8, x: 0, y: 4)
+            )
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
+            .animation(.easeInOut(duration: 0.3), value: isActive)
+    }
+}
+
 struct HomeView: View {
     // Goals & streak
     @StateObject private var goals = GoalManager()
@@ -28,8 +63,6 @@ struct HomeView: View {
     
     // Use environment object to avoid repeated creation in views
     @EnvironmentObject private var watchBridge: WatchHRBridge
-    
-    // Use environment object with silent mode protection
 
     // Categories (uses your PairTask / TaskCategory types)
     private var categories: [TaskCategory] {
@@ -49,155 +82,185 @@ struct HomeView: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 16) {
+            ZStack {
+                // 高级渐变背景
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color.blue.opacity(0.1),
+                        Color.purple.opacity(0.05),
+                        Color.pink.opacity(0.1)
+                    ]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: 16) {
 
-                    // Greeting + streak
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Hi there 👋").font(.title2).bold()
-                            Text("Keep training your LLM with physiology!")
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        VStack {
-                            Text("Streak").font(.caption2).foregroundStyle(.secondary)
-                            Text("\(goals.streakDays)d").font(.title2).bold()
-                        }
-                        .padding(10)
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(12)
-                    }
-
-                    // HealthKit permission row
-                    HStack(spacing: 8) {
-                        Image(systemName: healthGranted ? "heart.fill" : "heart")
-                            .foregroundStyle(healthGranted ? .red : .secondary)
-                        Text(healthGranted ? "Health access granted" : "Health access not granted")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Button("Grant") { requestHealth() }
-                            .buttonStyle(.bordered)
-                    }
-                    .padding(.horizontal, 4)
-                    
-                    VStack(spacing: 12) {
+                        // Greeting + streak
                         HStack {
-                            Text("Watch & Heart Rate")
-                                .font(.headline)
+                            VStack(alignment: .leading) {
+                                Text("Hi there 👋").font(.title2).bold()
+                                Text("Keep training your LLM with physiology!")
+                                    .foregroundStyle(.secondary)
+                            }
                             Spacer()
+                            VStack {
+                                Text("Streak").font(.caption2).foregroundStyle(.secondary)
+                                Text("\(goals.streakDays)d").font(.title2).bold()
+                            }
+                            .padding(10)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(16)
+                            .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
                         }
-                        .padding(.horizontal)
-                        
-                        VStack(spacing: 8) {
-                        HStack {
-                            Image(systemName: watchBridge.isReachable ? "applewatch.watchface" : "applewatch")
-                                .foregroundColor(watchBridge.isReachable ? .green : .red)
-                            Text(watchBridge.isReachable ? "Watch Connected" : "Watch Not Connected")
-                                .foregroundColor(watchBridge.isReachable ? .green : .red)
-                        }
-                        
-                        HStack {
-                            Text("Paired: \(watchBridge.isPairedAndInstalled ? "Yes" : "No")")
+
+                        // HealthKit permission row
+                        HStack(spacing: 8) {
+                            Image(systemName: healthGranted ? "heart.fill" : "heart")
+                                .foregroundStyle(healthGranted ? .red : .secondary)
+                            Text(healthGranted ? "Health access granted" : "Health access not granted")
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                             Spacer()
-                            Button("Refresh") {
-                                // Force refresh connection status
-                                watchBridge.activateIfNeeded()
-                            }
-                            .font(.caption)
-                            .buttonStyle(.bordered)
+                            Button("Grant") { requestHealth() }
+                                .buttonStyle(.bordered)
                         }
-
-                        HStack {
-                            Text("❤️ Heart Rate:")
-                            Text("\(watchBridge.lastBPM ?? 0) bpm")
-                                .foregroundColor(.blue)
-                                .font(.headline)
+                        .padding(.horizontal, 4)
+                        
+                        VStack(spacing: 12) {
+                            HStack {
+                                Text("Watch & Heart Rate")
+                                    .font(.headline)
+                                Spacer()
+                            }
+                            .padding(.horizontal)
                             
-                            // Flashing LIVE indicator
-                            if watchBridge.isReachable && watchBridge.lastBPM != nil {
-                                HStack(spacing: 4) {
-                                    // Flashing dot
-                                    Circle()
-                                        .fill(Color.green)
-                                        .frame(width: 8, height: 8)
-                                        .scaleEffect(watchBridge.isReachable ? 1.2 : 0.8)
-                                        .opacity(watchBridge.isReachable ? 1.0 : 0.5)
-                                        .animation(
-                                            .easeInOut(duration: 0.6)
-                                            .repeatForever(autoreverses: true),
-                                            value: watchBridge.isReachable
-                                        )
-                                    
-                                    // LIVE text
-                                    Text("LIVE")
-                                        .font(.caption2)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.green)
-                                        .opacity(watchBridge.isReachable ? 1.0 : 0.7)
-                                        .animation(
-                                            .easeInOut(duration: 0.8)
-                                            .repeatForever(autoreverses: true),
-                                            value: watchBridge.isReachable
-                                        )
+                            VStack(spacing: 8) {
+                                HStack {
+                                    Image(systemName: watchBridge.isWatchConnected ? "applewatch.watchface" : "applewatch")
+                                        .foregroundColor(watchBridge.isWatchConnected ? .green : .red)
+                                    Text(watchBridge.isWatchConnected ? "Watch Connected" : "Watch Not Connected")
+                                        .foregroundColor(watchBridge.isWatchConnected ? .green : .red)
                                 }
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color.green.opacity(0.1))
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .stroke(Color.green.opacity(0.3), lineWidth: 1)
-                                        )
-                                )
-                            }
-                        }
+                                
+                                HStack {
+                                    Text("Connected: \(watchBridge.isWatchConnected ? "Yes" : "No")")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                    Button("Refresh") {
+                                        watchBridge.activateIfNeeded()
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            if let wcSession = watchBridge.session {
+                                                #if os(iOS)
+                                                watchBridge.isWatchConnected = wcSession.isPaired && wcSession.isWatchAppInstalled && wcSession.isReachable
+                                                #endif
+                                                watchBridge.isReachable = wcSession.isReachable
+                                            }
+                                        }
+                                    }
+                                    .font(.caption)
+                                    .buttonStyle(.bordered)
+                                }
+                                
+                                // Flashing LIVE indicator
+                                if watchBridge.isWatchConnected && watchBridge.lastBPM != nil {
+                                    HStack {
+                                        Circle()
+                                            .fill(Color.green)
+                                            .frame(width: 8, height: 8)
+                                            .scaleEffect(1.0)
+                                            .animation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true), value: watchBridge.lastBPM)
+                                        Text("LIVE")
+                                            .font(.caption)
+                                            .foregroundColor(.green)
+                                        Spacer()
+                                    }
+                                }
+                                
+                                // Heart rate display
+                                if let bpm = watchBridge.lastBPM {
+                                    HStack {
+                                        Text("❤️ \(bpm) BPM")
+                                            .font(.title2)
+                                            .bold()
+                                        Spacer()
+                                    }
+                                } else {
+                                    HStack {
+                                        Text("No heart rate data")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        Spacer()
+                                    }
+                                }
+                                
+                                // Control buttons
+                                HStack(spacing: 20) {
+                                    Button(action: {
+                                        watchBridge.startWorkoutOnWatch()
+                                    }) {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "play.fill")
+                                                .font(.caption)
+                                            Text("Start")
+                                                .font(.caption)
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 8)
+                                        .foregroundColor(watchBridge.isWorkoutActive ? .white : .primary)
+                                    }
+                                    .buttonStyle(GlassGradientButtonStyle(
+                                        isActive: watchBridge.isWorkoutActive,
+                                        gradientColors: [Color.green, Color.green.opacity(0.7)]
+                                    ))
+                                    .disabled(watchBridge.isWorkoutActive)
 
-                        HStack(spacing: 20) {
-                            Button(action: {
-                                watchBridge.startWorkoutOnWatch()
-                            }) {
-                                Text("Start")
-                                    .padding()
-                                    .background(Color.green.opacity(0.2))
-                                    .cornerRadius(8)
-                            }
-
-                            Button(action: {
-                                watchBridge.stopWorkoutOnWatch()
-                            }) {
-                                Text("Stop")
-                                    .padding()
-                                    .background(Color.red.opacity(0.2))
-                                    .cornerRadius(8)
-                            }
-                            
-                            Button(action: {
-                                watchBridge.ping()
-                            }) {
-                                Text("Test")
-                                    .padding()
-                                    .background(Color.blue.opacity(0.2))
-                                    .cornerRadius(8)
-                            }
-                            
-                            Button(action: {
-                                watchBridge.simulateHeartRateData()
-                            }) {
-                                Text("Simulate")
-                                    .padding()
-                                    .background(Color.orange.opacity(0.2))
-                                    .cornerRadius(8)
-                            }
+                                    Button(action: {
+                                        watchBridge.stopWorkoutOnWatch()
+                                    }) {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "stop.fill")
+                                                .font(.caption)
+                                            Text("Stop")
+                                                .font(.caption)
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 8)
+                                        .foregroundColor(watchBridge.isWorkoutActive ? .white : .primary)
+                                    }
+                                    .buttonStyle(GlassGradientButtonStyle(
+                                        isActive: watchBridge.isWorkoutActive,
+                                        gradientColors: [Color.red, Color.red.opacity(0.7)]
+                                    ))
+                                    .disabled(!watchBridge.isWorkoutActive)
+                                    
+                                    Button(action: {
+                                        watchBridge.ping()
+                                    }) {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "heart.fill")
+                                                .font(.caption)
+                                            Text("Test")
+                                                .font(.caption)
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 8)
+                                        .foregroundColor(.primary)
+                                    }
+                                    .buttonStyle(GlassGradientButtonStyle(
+                                        isActive: false,
+                                        gradientColors: [Color.purple.opacity(0.3), Color.purple.opacity(0.1)]
+                                    ))
+                                }
                             }
                         }
                         .padding()
                         .background(.ultraThinMaterial)
-                        .cornerRadius(12)
+                        .cornerRadius(16)
+                        .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
                         
                         // Heart rate chart - always display, even without data
                         HeartRateChart(dataPoints: watchBridge.heartRateHistory)
@@ -207,8 +270,8 @@ struct HomeView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Today's Goal")
                         HStack {
-                            ProgressView(value: Double(goals.completedToday),
-                                         total: Double(goals.dailyTarget))
+                            ProgressView(value: Double(max(0, min(goals.completedToday, goals.dailyTarget))),
+                                         total: Double(max(1, goals.dailyTarget)))
                                 .progressViewStyle(.linear)
                                 .frame(maxWidth: .infinity)
                             Text("\(goals.completedToday)/\(goals.dailyTarget)")
@@ -224,6 +287,7 @@ struct HomeView: View {
                     .padding()
                     .background(.ultraThinMaterial)
                     .cornerRadius(16)
+                    .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
 
                     // Categories grid
                     VStack(alignment: .leading) {
@@ -263,8 +327,7 @@ struct HomeView: View {
                             labelCapsule("Quick Start", "bolt.fill")
                         }
                         NavigationLink {
-                            Text("History (coming soon)")
-                                .navigationTitle("History")
+                            HistoryView()
                         } label: {
                             labelCapsule("History", "clock.arrow.circlepath")
                         }
@@ -323,10 +386,6 @@ struct HomeView: View {
         }
     }
     
-
-    
-
-
     @ViewBuilder
     private func labelCapsule(_ title: String, _ systemName: String) -> some View {
         HStack {
@@ -438,13 +497,13 @@ enum DemoPools {
     static let empathy: [PairTask] = [
         .init(
             question: "Which reply would make you more willing to keep collaborating?",
-            optionA: "I understand this is a heavy week for you. Let’s break the work into smaller steps and start with the most urgent one. I’ll help clarify the details and set gentle reminders for key milestones. If we move steadily, we will get this done without burning out.",
-            optionB: "List the tasks, mark priorities, start with the first item. I’ll sync status and warn before the deadline. Stick to the plan.",
+            optionA: "I understand this is a heavy week for you. Let's break the work into smaller steps and start with the most urgent one. I'll help clarify the details and set gentle reminders for key milestones. If we move steadily, we will get this done without burning out.",
+            optionB: "List the tasks, mark priorities, start with the first item. I'll sync status and warn before the deadline. Stick to the plan.",
             secReadA: 20, secReadB: 20, secDecide: 10
         ),
         .init(
             question: "Which message would comfort you more after a setback?",
-            optionA: "You’ve been trying hard, and it shows. Let’s catch our breath, choose one small next step, and rebuild momentum. I’m here with you.",
+            optionA: "You've been trying hard, and it shows. Let's catch our breath, choose one small next step, and rebuild momentum. I'm here with you.",
             optionB: "Failure happens. Analyze what went wrong and try again.",
             secReadA: 20, secReadB: 20, secDecide: 10
         )
@@ -453,7 +512,7 @@ enum DemoPools {
     static let clarity: [PairTask] = [
         .init(
             question: "Which instruction is easier to follow?",
-            optionA: "Please write an article about environmental protection. I hope it’s moving, preferably with a story or some data, not too serious but not too casual either, and please keep it around three hundred words…",
+            optionA: "Please write an article about environmental protection. I hope it's moving, preferably with a story or some data, not too serious but not too casual either, and please keep it around three hundred words…",
             optionB: "Write an ≤300-word piece on environmental protection:\n1) Start with a concrete scene;\n2) Include one statistic or fact;\n3) End with an actionable tip.\nTone: warm but firm.",
             secReadA: 20, secReadB: 20, secDecide: 10
         )
@@ -480,7 +539,7 @@ enum DemoPools {
     static let factuality: [PairTask] = [
         .init(
             question: "Which answer sounds more factually grounded?",
-            optionA: "The Amazon rainforest spans multiple countries, with the largest portion in Brazil. It is sometimes called the planet’s lungs due to its role in the carbon cycle, although the metaphor oversimplifies the complex balance of sources and sinks.",
+            optionA: "The Amazon rainforest spans multiple countries, with the largest portion in Brazil. It is sometimes called the planet's lungs due to its role in the carbon cycle, although the metaphor oversimplifies the complex balance of sources and sinks.",
             optionB: "The Amazon rainforest is only in Brazil and is the single largest source of oxygen for the entire planet.",
             secReadA: 20, secReadB: 20, secDecide: 10
         )

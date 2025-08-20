@@ -103,6 +103,7 @@
 				HealthAuth.swift,
 				HealthKitHR.swift,
 				HeartRateChart.swift,
+				HistoryView.swift,
 				HomeView.swift,
 				HREmulator.swift,
 				SharedTypes.swift,
