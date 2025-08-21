@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSHealthUpdateUsageDescription</key>
+	<key>Privacy – Health Share Usage Description</key>
+	<string>Read heart rate to study user preference (non-medical)</string>
+	<key>Privacy – Health Update Usage Description</key>
 	<string>This app writes workout data to Health to keep your activity history complete.</string>
-	<key>NSHealthShareUsageDescription</key>
-	<string>This app reads heart rate data to analyze your physiological responses during AI training tasks.</string>
 	<key>Supports Running Without iPhone</key>
 	<true/>
 </dict>

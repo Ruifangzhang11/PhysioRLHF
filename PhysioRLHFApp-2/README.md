@@ -133,3 +133,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 **NeuralTrain** - Where human physiology meets AI training 🧠⚡
+
