@@ -8,7 +8,6 @@
 	<array/>
 	<key>WKBackgroundModes</key>
 	<array>
-		<string>self-care</string>
 		<string>workout-processing</string>
 		<string>background-processing</string>
 		<string>background-app-refresh</string>

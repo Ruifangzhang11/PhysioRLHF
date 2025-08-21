@@ -100,6 +100,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				AppConfig.swift,
+				Assets.xcassets,
 				HealthAuth.swift,
 				HealthKitHR.swift,
 				HeartRateChart.swift,
@@ -119,6 +120,7 @@
 		52E955222E545CCF009EE64E /* Exceptions for "PhysioRLHFApp-2" folder in "PhysioRLHF watch Watch App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Assets.xcassets,
 				SharedTypes.swift,
 				WatchHRBridge.swift,
 			);
